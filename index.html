@@ -6,245 +6,78 @@
 <title>From NICE approval to patient access | The Prescription</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  font-family: Georgia, 'Times New Roman', serif;
-  background: #F6F5F2;
-  color: #1E1E1E;
-  min-height: 100vh;
-}
-
-.page { max-width: 860px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
-
-.brand-header { display: flex; align-items: stretch; gap: 0; margin-bottom: 2.25rem; }
+body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-height: 100vh; }
+.page { max-width: 960px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+.brand-header { display: flex; align-items: stretch; margin-bottom: 2rem; }
 .brand-bar { width: 5px; background: #2F6B5F; border-radius: 2px; flex-shrink: 0; }
-.brand-text { padding: 4px 0 4px 14px; }
+.brand-txt { padding: 4px 0 4px 14px; }
 .brand-name { font-size: 13px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: #1E1E1E; line-height: 1.2; }
-.brand-tag { font-size: 11px; color: #6F6F6F; font-style: italic; margin-top: 2px; font-family: Georgia, serif; }
-
-.page-title { font-size: 22px; font-weight: 700; color: #1E1E1E; margin-bottom: 6px; line-height: 1.3; }
+.brand-tag { font-size: 11px; color: #6F6F6F; font-style: italic; margin-top: 2px; }
+.page-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
 .page-sub { font-size: 13px; color: #6F6F6F; margin-bottom: 1.25rem; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.5; }
-
-.scope-note {
-  font-size: 12px;
-  padding: 10px 14px;
-  background: #DCE7E3;
-  border-left: 3px solid #2F6B5F;
-  border-radius: 0 6px 6px 0;
-  margin-bottom: 1.5rem;
-  color: #1E1E1E;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  line-height: 1.55;
-}
-.scope-note strong { font-weight: 600; }
-
-.legend {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px 16px;
-  margin-bottom: 1.75rem;
-  font-size: 11px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  color: #6F6F6F;
-}
+.scope { font-size: 12px; padding: 10px 14px; background: #DCE7E3; border-left: 3px solid #2F6B5F; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; color: #1E1E1E; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.55; }
+.scope strong { font-weight: 600; }
+.concurrent-note { font-size: 11px; padding: 8px 12px; background: #F6F5F2; border: 1px solid #DCE7E3; border-radius: 6px; margin-bottom: 1.5rem; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; font-style: italic; }
+.toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+.tog { font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600; padding: 4px 11px; border-radius: 20px; border: 1.5px solid transparent; cursor: pointer; transition: opacity 0.15s; user-select: none; }
+.tog.off { opacity: 0.35; }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 1.5rem; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #6F6F6F; }
 .leg-item { display: flex; align-items: center; gap: 6px; }
 .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-
-.flow { display: flex; flex-direction: column; }
-
-.stage { display: flex; align-items: stretch; }
-.stage-label {
-  width: 120px;
-  flex-shrink: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  justify-content: center;
-  padding: 10px 12px 10px 0;
-  gap: 3px;
-}
-.stage-tag {
-  font-size: 10px;
-  font-weight: 600;
-  padding: 3px 9px;
-  border-radius: 20px;
-  text-align: center;
-  line-height: 1.3;
-  letter-spacing: 0.02em;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-.opt-hint {
-  font-size: 9px;
-  color: #6F6F6F;
-  font-style: italic;
-  padding-left: 9px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-
-.stage-content {
-  flex: 1;
-  border-left: 2px solid #2F6B5F;
-  padding: 0 0 0 16px;
-}
-.stage-content.dashed { border-left-style: dashed; border-left-color: #2F6B5F88; }
-
-.node-row { display: flex; flex-wrap: wrap; gap: 8px; padding: 10px 0; align-items: flex-start; }
-
-.node {
-  border-radius: 6px;
-  padding: 9px 12px;
-  font-size: 12px;
-  cursor: pointer;
-  border: 1px solid transparent;
-  transition: transform 0.12s, box-shadow 0.12s;
-  min-width: 145px;
-  flex: 1;
-  max-width: 255px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-.node:hover { transform: translateY(-2px); box-shadow: 0 3px 10px rgba(47,107,95,0.15); }
-.node-title { font-weight: 600; font-size: 12px; margin-bottom: 2px; }
-.node-sub { font-size: 11px; line-height: 1.35; }
-.opt-badge {
-  display: inline-block;
-  font-size: 9px;
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-weight: 600;
-  margin-top: 5px;
-  background: #F6F5F2;
-  color: #6F6F6F;
-  border: 1px solid #6F6F6F44;
-}
-
-.node-excluded {
-  border-radius: 6px;
-  padding: 9px 12px;
-  font-size: 12px;
-  border: 1px dashed #6F6F6F55;
-  background: #F6F5F2;
-  color: #6F6F6F;
-  min-width: 145px;
-  flex: 1;
-  max-width: 255px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  opacity: 0.65;
-}
-.node-excluded .node-title { font-weight: 600; font-size: 12px; margin-bottom: 2px; text-decoration: line-through; }
-.node-excluded .node-sub { font-size: 11px; }
-.excl-badge {
-  display: inline-block;
-  font-size: 9px;
-  padding: 1px 6px;
-  border-radius: 10px;
-  font-weight: 600;
-  margin-top: 5px;
-  background: #6F6F6F22;
-  color: #6F6F6F;
-}
-
-.arrow-row { height: 18px; display: flex; align-items: center; }
-
-.detail-overlay {
-  display: none;
-  position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99;
-  background: rgba(30,30,30,0.18);
-}
-.detail-overlay.open { display: block; }
-
-.detail-panel {
-  position: fixed; top: 0; right: 0; width: 340px; height: 100%;
-  background: #F6F5F2;
-  border-left: 1px solid #DCE7E3;
-  padding: 28px 22px;
-  overflow-y: auto;
-  transform: translateX(100%);
-  transition: transform 0.22s ease;
-  z-index: 100;
-}
-.detail-panel.open { transform: translateX(0); }
-.detail-close {
-  float: right;
-  background: none;
-  border: 1px solid #DCE7E3;
-  border-radius: 5px;
-  padding: 4px 10px;
-  cursor: pointer;
-  font-size: 11px;
-  color: #6F6F6F;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-.detail-close:hover { background: #DCE7E3; }
-.detail-type {
-  display: inline-block;
-  font-size: 10px;
-  padding: 2px 9px;
-  border-radius: 12px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-  letter-spacing: 0.03em;
-}
-.detail-panel h2 { font-size: 15px; font-weight: 700; margin: 0 0 3px; color: #1E1E1E; }
-.detail-stage { font-size: 11px; color: #6F6F6F; margin-bottom: 16px; font-family: 'Helvetica Neue', Arial, sans-serif; }
-.detail-panel h3 {
-  font-size: 10px;
-  font-weight: 700;
-  margin: 14px 0 6px;
-  color: #2F6B5F;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-.detail-panel p { font-size: 13px; line-height: 1.65; margin-bottom: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #1E1E1E; }
-.detail-panel ul { padding-left: 16px; }
-.detail-panel li { font-size: 12px; line-height: 1.6; margin-bottom: 5px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #1E1E1E; }
-.insight-box {
-  padding: 10px 13px;
-  background: #DCE7E3;
-  border-radius: 6px;
-  border-left: 3px solid #2F6B5F;
-  font-size: 12px;
-  line-height: 1.6;
-  color: #1E1E1E;
-  font-family: 'Helvetica Neue', Arial, sans-serif;
-}
-
-.page-footer {
-  margin-top: 2.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #DCE7E3;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.footer-bar { width: 3px; height: 28px; background: #2F6B5F; border-radius: 2px; }
-.footer-text { font-size: 11px; color: #6F6F6F; font-style: italic; font-family: Georgia, serif; }
-
-@media (max-width: 600px) {
-  .stage-label { width: 85px; }
-  .node { min-width: 120px; }
-  .detail-panel { width: 100%; }
-  .page { padding: 1.5rem 1rem 3rem; }
-}
+.grid-outer { overflow-x: auto; }
+.grid { display: grid; min-width: 700px; }
+.col-header { font-size: 10px; font-weight: 700; font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 6px 4px; border-radius: 6px 6px 0 0; letter-spacing: 0.04em; text-transform: uppercase; }
+.stage-label-cell { display: flex; align-items: flex-start; padding: 10px 8px 10px 0; border-bottom: 1px solid #DCE7E3; }
+.stage-pill { font-size: 10px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 3px 8px; border-radius: 20px; background: #DCE7E3; color: #1C4A3F; white-space: nowrap; }
+.lane-cell { padding: 8px 4px; border-bottom: 1px solid #DCE7E3; border-left: 1px solid #DCE7E3; display: flex; flex-direction: column; gap: 5px; min-height: 60px; transition: opacity 0.2s; }
+.lane-cell.hidden { opacity: 0; pointer-events: none; }
+.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.node:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(47,107,95,0.15); }
+.node-title { font-weight: 600; font-size: 11px; margin-bottom: 2px; line-height: 1.3; }
+.node-sub { font-size: 10px; line-height: 1.3; margin-bottom: 4px; }
+.node-dur { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
+.node-dur svg { flex-shrink: 0; }
+.node-dur span { font-size: 10px; font-weight: 600; }
+.node-excl { opacity: 0.45; border-radius: 6px; padding: 8px 10px; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; border: 1px dashed #6F6F6F55; }
+.node-excl .node-title { text-decoration: line-through; font-weight: 600; }
+.node-excl .node-sub { font-size: 10px; }
+.excl-badge { font-size: 9px; padding: 1px 5px; border-radius: 8px; background: #6F6F6F22; color: #6F6F6F; display: inline-block; margin-top: 3px; }
+.panel-overlay { display: none; position: fixed; inset: 0; background: rgba(30,30,30,0.18); z-index: 99; }
+.panel-overlay.open { display: block; }
+.panel { position: fixed; top: 0; right: 0; width: 340px; height: 100%; background: #F6F5F2; border-left: 1px solid #DCE7E3; padding: 28px 22px; overflow-y: auto; transform: translateX(100%); transition: transform 0.2s ease; z-index: 100; }
+.panel.open { transform: translateX(0); }
+.panel-close { float: right; background: none; border: 1px solid #DCE7E3; border-radius: 5px; padding: 3px 9px; cursor: pointer; font-size: 11px; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.panel-close:hover { background: #DCE7E3; }
+.panel-type { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin-bottom: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 0.03em; }
+.panel-dur { display: flex; align-items: center; gap: 5px; margin-bottom: 12px; }
+.panel-dur span { font-size: 11px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.panel h2 { font-size: 15px; font-weight: 700; margin: 0 0 3px; color: #1E1E1E; }
+.panel-stage { font-size: 10px; color: #6F6F6F; margin-bottom: 14px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.panel h3 { font-size: 10px; font-weight: 700; margin: 14px 0 6px; color: #2F6B5F; text-transform: uppercase; letter-spacing: 0.08em; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.panel p { font-size: 12px; line-height: 1.65; font-family: 'Helvetica Neue', Arial, sans-serif; color: #1E1E1E; }
+.panel ul { padding-left: 14px; }
+.panel li { font-size: 11px; line-height: 1.6; margin-bottom: 4px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #1E1E1E; }
+.insight { padding: 10px 12px; background: #DCE7E3; border-left: 3px solid #2F6B5F; border-radius: 0 5px 5px 0; font-size: 11px; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 4px; color: #1E1E1E; }
+.footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #DCE7E3; display: flex; align-items: center; gap: 8px; }
+.footer-bar { width: 3px; height: 24px; background: #2F6B5F; border-radius: 2px; }
+.footer-txt { font-size: 11px; color: #6F6F6F; font-style: italic; font-family: Georgia, serif; }
+@media (max-width: 600px) { .stage-label-cell { min-width: 80px; } .panel { width: 100%; } .page { padding: 1.5rem 1rem 3rem; } }
 </style>
 </head>
 <body>
 <div class="page">
-
   <div class="brand-header">
     <div class="brand-bar"></div>
-    <div class="brand-text">
+    <div class="brand-txt">
       <div class="brand-name">The Prescription</div>
       <div class="brand-tag">for clarity in complexity</div>
     </div>
   </div>
-
   <div class="page-title">From NICE approval to patient access</div>
-  <div class="page-sub">Every formal and informal gate a medicine must pass after a positive NICE technology appraisal. Click any node for detail.</div>
-
-  <div class="scope-note"><strong>Scope:</strong> This flow covers medicines commissioned by ICBs following routine NICE technology appraisal. <strong>Specialised commissioning (NHS England direct) is out of scope</strong> — that pathway diverges at NICE publication and follows a separate route toward implementation.</div>
-
+  <div class="page-sub">Every gate a medicine must pass after a positive NICE technology appraisal. Click any node for detail.</div>
+  <div class="scope"><strong>Scope:</strong> This flow covers medicines commissioned by ICBs following routine NICE technology appraisal. <strong>Specialised commissioning (NHS England direct) is out of scope</strong> — that pathway diverges at NICE publication and follows a separate route toward implementation.</div>
+  <div class="concurrent-note">Note: many of these steps run concurrently rather than sequentially. Duration estimates reflect typical elapsed time for each step in isolation.</div>
+  <div class="toggles" id="toggles"></div>
   <div class="legend">
     <div class="leg-item"><div class="leg-dot" style="background:#2F6B5F"></div><span>Formal / regulatory</span></div>
     <div class="leg-item"><div class="leg-dot" style="background:#4A7FA5"></div><span>Commissioning / funding</span></div>
@@ -253,394 +86,199 @@ body {
     <div class="leg-item"><div class="leg-dot" style="background:#7A5C6E"></div><span>Informal / cultural</span></div>
     <div class="leg-item"><div class="leg-dot" style="background:#6F6F6F"></div><span>Out of scope</span></div>
   </div>
-
-  <div class="flow" id="flow"></div>
-
-  <div class="page-footer">
+  <div class="grid-outer"><div class="grid" id="grid"></div></div>
+  <div class="footer">
     <div class="footer-bar"></div>
-    <div class="footer-text">theprescription.co.uk &nbsp;&middot;&nbsp; for clarity in complexity</div>
+    <div class="footer-txt">theprescription.co.uk &nbsp;&middot;&nbsp; for clarity in complexity</div>
   </div>
-
 </div>
-
-<div class="detail-overlay" id="overlay" onclick="closePanel()"></div>
-<div class="detail-panel" id="detail">
-  <button class="detail-close" onclick="closePanel()">Close</button>
-  <div id="detail-content"></div>
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+  <button class="panel-close" onclick="closePanel()">Close</button>
+  <div id="panel-content"></div>
 </div>
-
 <script>
-const C = {
-  formal:        { bg:'#E8F0EE', border:'#2F6B5F55', title:'#1C4A3F', sub:'#2F6B5F', typeBg:'#DCE7E3', typeText:'#1C4A3F' },
-  commissioning: { bg:'#E8EFF5', border:'#4A7FA555', title:'#2A4F6A', sub:'#4A7FA5', typeBg:'#D8E8F2', typeText:'#2A4F6A' },
-  operational:   { bg:'#F2EAE2', border:'#8B5E3C55', title:'#5C3A20', sub:'#8B5E3C', typeBg:'#EDD9C8', typeText:'#5C3A20' },
-  clinical:      { bg:'#EBF0E5', border:'#5C6B4755', title:'#3A4A2A', sub:'#5C6B47', typeBg:'#D8E5CC', typeText:'#3A4A2A' },
-  informal:      { bg:'#EEE8EC', border:'#7A5C6E55', title:'#4A3040', sub:'#7A5C6E', typeBg:'#E2D4DC', typeText:'#4A3040' }
-};
-
-const typeLabels = {
-  formal:'Formal / regulatory',
-  commissioning:'Commissioning / funding',
-  operational:'Operational / supply',
-  clinical:'Clinical / prescribing',
-  informal:'Informal / cultural'
-};
-
-const stages = [
-  {
-    label: 'NICE\napproval',
-    optional: false,
-    nodes: [
-      {
-        title: 'NICE technology appraisal',
-        sub: 'Positive recommendation issued',
-        type: 'formal',
-        what: 'NICE issues a positive technology appraisal (TA) recommendation. This triggers a legal obligation for the NHS in England to fund the medicine, typically within 90 days of the final guidance date.',
-        barriers: [
-          'Mandatory funding direction applies to routine commissioning TAs only — not NICE guidelines, pathways, or evidence reviews',
-          'Conditional approval with managed access creates ongoing uncertainty about long-term routine commissioning',
-          'Some TAs are approved only for a sub-population narrower than the licensed indication'
-        ],
-        tip: null
-      },
-      { excluded: true, title: 'Specialised commissioning', sub: 'NHS England direct — out of scope', badge: 'Out of scope' }
-    ]
-  },
-  {
-    label: 'Funding\nvariation',
-    optional: true,
-    nodes: [
-      {
-        title: 'Funding variation agreement',
-        sub: 'Where budget impact exceeds £40m per year',
-        type: 'formal',
-        optional: true,
-        what: 'A funding variation allows NHS England to extend the standard 90-day mandatory funding period — up to a maximum of three years — where the net budget impact of a NICE-approved medicine is expected to exceed £40 million per year in any of the first three financial years of NHS use, or where training, infrastructure, or staffing are not yet in place.',
-        barriers: [
-          'The funding variation process can delay patient access by years after a positive NICE recommendation',
-          'NHS England must signal variation intent before the first committee meeting — late requests are not usually accepted, creating a tight planning window for manufacturers',
-          'Phased funding during the variation period means some eligible patients may not access treatment until the variation period ends',
-          'The process currently lacks a fixed statutory timeframe, meaning timelines can vary significantly between evaluations'
-        ],
-        tip: 'NICE is currently consulting on this process (open until 19 June 2026). If your medicine is likely to exceed the £40m budget impact threshold, engage early with NHS England\'s commercial team well before the first committee meeting.'
-      }
-    ]
-  },
-  {
-    label: 'ICB /\nsystem',
-    optional: false,
-    nodes: [
-      {
-        title: 'ICB medicines committee review',
-        sub: 'Area Prescribing Committee or equivalent',
-        type: 'commissioning',
-        what: 'The ICB Area Prescribing Committee (APC) or equivalent reviews the medicine. Despite NICE approval, many APCs run their own review process, causing months of additional delay.',
-        barriers: [
-          'NICE TA does not attract additional ring-fenced funding to system level',
-          'Many APCs apply additional local economic modelling or budget impact analysis despite NICE approval',
-          'Committee meeting dates are not aligned to NICE TA publication, so an appraisal may not go to committee until 45 days post-publication',
-          'Committees may have a sub-structure which further delays consideration (e.g. formulary sub-committees), or the APC may not have adequate budget delegation to approve, requiring escalation'
-        ],
-        tip: null
-      },
-      {
-        title: 'System budget impact assessment',
-        sub: 'Local prevalence and cost modelling',
-        type: 'commissioning',
-        what: 'The ICB assesses the local budget impact based on estimated prevalent and incident population, treatment duration, and gross cost — often without visibility of any commercial discount agreed between NHSE and the manufacturer.',
-        barriers: [
-          'ICBs work from list price — real net cost after commercial discount may be substantially lower',
-          'NICE estimates are based on clinical trial rather than real-world data',
-          'Affordability is not a legitimate reason to withhold a NICE-approved medicine — but in practice, approval for additional in-year investment in a medicine not considered in planning and budget setting is challenging'
-        ],
-        tip: null
-      },
-      {
-        title: 'Prescribing pathway / RAG classification',
-        sub: 'Traffic light or formulary status',
-        type: 'commissioning',
-        what: 'The ICB assigns a RAG (red/amber/green) or equivalent classification determining who can prescribe, in what setting, and whether prior approval is needed.',
-        barriers: [
-          'NICE approval does not usually dictate the appropriate setting for prescribing — this can be problematic where NICE criteria do not align to local clinical pathways and commissioned services',
-          'Criteria for prior approval can be more restrictive than the NICE population',
-          'This can drive inconsistency between formularies',
-          'NICE population and local formulary eligibility criteria frequently diverge'
-        ],
-        tip: null
-      }
-    ]
-  },
-  {
-    label: 'Trust /\nhospital',
-    optional: false,
-    nodes: [
-      {
-        title: 'Trust Drug & Therapeutics Committee',
-        sub: 'Hospital formulary decision',
-        type: 'operational',
-        what: 'Even after ICB approval, individual NHS trusts may run their own Drug & Therapeutics Committees (DTCs) which make independent formulary decisions.',
-        barriers: [
-          'DTCs are independent of ICBs — NICE approval does not bind them; the NICE mandate applies to commissioners',
-          'Additional built-in systemic delay to access',
-          'Trusts may bear the cost of high-cost drugs under block or tariff contracts — creating a financial incentive to delay',
-          'Some trusts add their own clinical or access criteria on top of NICE and ICB criteria'
-        ],
-        tip: null
-      },
-      {
-        title: 'Service capacity and resource planning',
-        sub: 'Can the organisation actually deliver the service?',
-        type: 'operational',
-        what: 'A medicine being on the formulary does not mean the trust can deliver it. New medicines often require additional clinical capacity, administration time, specialist nursing, infusion suite access, or outpatient appointments that do not exist within current resource. Trusts must assess whether the service model is deliverable before committing to prescribing.',
-        barriers: [
-          'Infusion or administration capacity may be insufficient to absorb new patients without additional investment',
-          'Specialist nursing, pharmacy, or clinical time required to initiate and monitor treatment may not be funded within existing contracts',
-          'Outpatient appointment demand generated by a new medicine may not be modelled or planned for',
-          'Tariff or block contract income may not cover the full cost of delivering the service, creating a financial disincentive even where clinical will exists'
-        ],
-        tip: null
-      }
-    ]
-  },
-  {
-    label: 'Shared\ncare',
-    optional: false,
-    nodes: [
-      {
-        title: 'Shared care protocol development',
-        sub: 'Agreement between trust, ICB, and GP practices',
-        type: 'commissioning',
-        what: 'Where responsibility for ongoing prescribing transfers from secondary to primary care, a shared care protocol (SCP) must be developed and ratified. The SCP defines clinical responsibilities, monitoring requirements, dose titration, and escalation criteria. It must be agreed by the trust, the ICB, and — critically — accepted by GP practices.',
-        barriers: [
-          'SCP development and ratification typically takes 6–12 months after NICE approval',
-          'GPs can decline shared care — there is no mechanism to compel acceptance',
-          'Liability concerns mean GPs frequently decline shared care for newer or complex medicines'
-        ],
-        tip: null
-      },
-      {
-        title: 'GP practice acceptance',
-        sub: 'Individual practices must opt in',
-        type: 'informal',
-        what: 'Even once a shared care protocol is ratified at ICB level, individual GP practices must agree to accept shared care responsibilities for their patients. Practice-level refusal is common and creates unequal access within the same ICB area.',
-        barriers: [
-          'No obligation on individual practices to accept shared care even when the ICB protocol is approved',
-          'Shared care is often perceived as being above and beyond GP core contract — a locally enhanced service may need to be developed, approved, funded and commissioned, adding a further 6–12 months',
-          'Practices cite workload, indemnity risk, and lack of familiarity with the medicine as reasons to decline',
-          'Patients registered with non-accepting practices must continue receiving prescriptions from hospital outpatients, creating inequity and capacity pressure',
-          'There is no consistent process for tracking which practices have accepted shared care within an ICB'
-        ],
-        tip: null
-      },
-      {
-        title: 'Monitoring and ongoing review',
-        sub: 'Sustaining shared care in practice',
-        type: 'operational',
-        what: 'Once shared care is live, the GP takes on responsibility for monitoring, repeat prescribing, and recognising when to escalate back to the specialist. The practical burden of monitoring — blood tests, clinical review, dose adjustment — determines whether shared care is sustainable in primary care.',
-        barriers: [
-          'Monitoring requirements that are burdensome or poorly resourced in primary care lead to protocol drift or abandonment',
-          'GP systems may not carry adequate clinical information from secondary care to support safe prescribing',
-          'Patients may not attend monitoring appointments, leaving GPs in an ambiguous liability position'
-        ],
-        tip: null
-      }
-    ]
-  },
-  {
-    label: 'Primary\ncare',
-    optional: false,
-    nodes: [
-      {
-        title: 'GP formulary and green listing',
-        sub: 'ICB green status enables GP prescribing',
-        type: 'commissioning',
-        what: 'For medicines classified as green on the ICB formulary, GPs can prescribe independently without shared care or specialist involvement. However, green listing does not automatically mean GPs will prescribe — awareness, confidence, and system readiness all determine whether prescribing actually happens.',
-        barriers: [
-          'Green listing by the ICB does not guarantee the medicine appears on GP system formularies or prescribing decision support tools',
-          'Clinical system suppliers (EMIS, SystmOne) may not have updated drug records, dosing guidance, or interaction flags for newer medicines',
-          'GPs may be unaware the medicine is green-listed and continue to refer unnecessarily to secondary care'
-        ],
-        tip: null
-      },
-      {
-        title: 'GP awareness and prescribing confidence',
-        sub: 'Informal: will the GP actually prescribe?',
-        type: 'informal',
-        what: 'Even where a medicine is green-listed and technically prescribable in primary care, GP prescribing rates depend heavily on awareness, clinical confidence, familiarity with the patient population, and perceived risk.',
-        barriers: [
-          'GPs may be unfamiliar with the condition or indication, particularly for medicines traditionally managed in secondary care or new medicines',
-          'Concern about side effect management, monitoring responsibilities, or patient complexity leads to unnecessary referral or non-prescribing',
-          'Prescribing incentive schemes can drive or suppress prescribing depending on how they are designed'
-        ],
-        tip: null
-      }
-    ]
-  },
-  {
-    label: 'Clinical /\nprescribing',
-    optional: false,
-    nodes: [
-      {
-        title: 'Specialist clinical eligibility',
-        sub: 'Patient meets criteria for treatment',
-        type: 'clinical',
-        what: 'The specialist clinician determines whether the individual patient meets the clinical eligibility criteria set by NICE and/or the local formulary. Criteria may include prior treatment failure, biomarker status, functional scores, or disease staging.',
-        barriers: [
-          'Local criteria may be more restrictive than the NICE population without formal justification',
-          'Diagnostic tests required to confirm eligibility may not be routinely commissioned or funded',
-          'Eligibility criteria can be applied inconsistently between clinicians and between trusts',
-          'NICE criteria may use surrogate measures not routinely collected in clinical practice'
-        ],
-        tip: null
-      },
-      {
-        title: 'Prior approval or exceptionality',
-        sub: 'If required by local formulary',
-        type: 'clinical',
-        what: 'Some ICB formularies require clinicians to submit a prior approval or individual funding request (IFR) for each patient, even where the medicine is NICE-approved. This creates significant administrative burden and delay.',
-        barriers: [
-          'IFR processes are designed for medicines without NICE approval — their application to TA-approved medicines is questionable but common',
-          'Clinicians may not refer patients rather than complete burdensome paperwork',
-          'Approval turnaround can take weeks, delaying urgent treatment',
-          'Criteria for exceptionality are often poorly defined'
-        ],
-        tip: null
-      },
-      {
-        title: 'Clinician awareness and confidence',
-        sub: 'Informal: does the prescriber know and trust the medicine?',
-        type: 'informal',
-        what: 'Even where all formal barriers are cleared, prescribing rates depend on whether clinicians are aware of the medicine, understand the evidence, feel confident in the indication, and see the medicine as part of their clinical routine.',
-        barriers: [
-          'Clinicians may be unaware a NICE TA has been published',
-          'Habit and inertia favour existing treatments',
-          'Concerns about side effects or monitoring requirements reduce prescribing confidence',
-          'One enthusiastic early adopter can account for a disproportionate share of early prescribing'
-        ],
-        tip: null
-      }
-    ]
-  },
-  {
-    label: 'Patient /\naccess',
-    optional: false,
-    nodes: [
-      {
-        title: 'Patient awareness and referral',
-        sub: 'Does the patient know to ask?',
-        type: 'informal',
-        what: 'Patients may not know a new treatment exists, may not be referred to the right specialist, or may not be empowered to ask about alternatives. This is particularly significant in conditions where patients are older, less health-literate, or socially disadvantaged.',
-        barriers: [
-          'Patient information does not automatically accompany NICE approvals',
-          'GPs may be unaware of new specialised treatments and not refer',
-          'Patients from deprived populations are less likely to self-advocate',
-          'Language, literacy, and digital access barriers compound awareness gaps'
-        ],
-        tip: null
-      },
-      {
-        title: 'Consent, monitoring and adherence',
-        sub: 'Ongoing access is not automatic',
-        type: 'clinical',
-        what: 'Once a patient is prescribed, ongoing access depends on successful consent, required monitoring tests, tolerability, and adherence. For many medicines these are complex, ongoing requirements.',
-        barriers: [
-          'Monitoring requirements may not be resourced in the prescribing setting',
-          'Patient adherence may be lower than in trial conditions',
-          'Some medicines require dispensing in a specific setting — travel burden affects adherence',
-          'Discontinuation criteria may result in patients losing access even when they wish to continue'
-        ],
-        tip: null
-      }
-    ]
-  }
+var lanes = [
+  { key:'formal',        label:'Formal / regulatory',    bg:'#E8F0EE', border:'#2F6B5F44', tc:'#1C4A3F', sc:'#2F6B5F', togBg:'#DCE7E3', togText:'#1C4A3F', togBorder:'#2F6B5F', hBg:'#DCE7E3', hText:'#1C4A3F' },
+  { key:'commissioning', label:'Commissioning / funding', bg:'#E8EFF5', border:'#4A7FA544', tc:'#2A4F6A', sc:'#4A7FA5', togBg:'#D8E8F2', togText:'#2A4F6A', togBorder:'#4A7FA5', hBg:'#D8E8F2', hText:'#2A4F6A' },
+  { key:'operational',   label:'Operational / supply',   bg:'#F2EAE2', border:'#8B5E3C44', tc:'#5C3A20', sc:'#8B5E3C', togBg:'#EDD9C8', togText:'#5C3A20', togBorder:'#8B5E3C', hBg:'#EDD9C8', hText:'#5C3A20' },
+  { key:'clinical',      label:'Clinical / prescribing', bg:'#EBF0E5', border:'#5C6B4744', tc:'#3A4A2A', sc:'#5C6B47', togBg:'#D8E5CC', togText:'#3A4A2A', togBorder:'#5C6B47', hBg:'#D8E5CC', hText:'#3A4A2A' },
+  { key:'informal',      label:'Informal / cultural',    bg:'#EEE8EC', border:'#7A5C6E44', tc:'#4A3040', sc:'#7A5C6E', togBg:'#E2D4DC', togText:'#4A3040', togBorder:'#7A5C6E', hBg:'#E2D4DC', hText:'#4A3040' }
 ];
 
-function renderFlow() {
-  const flow = document.getElementById('flow');
-  stages.forEach((stage, si) => {
-    const stageEl = document.createElement('div');
-    stageEl.className = 'stage';
+var typeLabels = { formal:'Formal / regulatory', commissioning:'Commissioning / funding', operational:'Operational / supply', clinical:'Clinical / prescribing', informal:'Informal / cultural' };
 
-    const labelEl = document.createElement('div');
-    labelEl.className = 'stage-label';
+var stages = [
+  { label:'NICE approval', nodes:[
+    { type:'formal', title:'NICE technology appraisal', sub:'Positive recommendation issued', dur:null,
+      what:'NICE issues a positive technology appraisal (TA) recommendation. This triggers a legal obligation for the NHS in England to fund the medicine, typically within 90 days of the final guidance date.',
+      barriers:['Mandatory funding direction applies to routine commissioning TAs only — not NICE guidelines, pathways, or evidence reviews','Conditional approval with managed access creates ongoing uncertainty about long-term routine commissioning','Some TAs are approved only for a sub-population narrower than the licensed indication'], tip:null },
+    { type:'excluded', title:'Specialised commissioning', sub:'NHS England direct — out of scope', badge:'Out of scope' }
+  ]},
+  { label:'ICB / system', nodes:[
+    { type:'commissioning', title:'ICB medicines decision making committee review', sub:'Area Prescribing Committee or equivalent', dur:'2\u20136 months',
+      what:'The ICB Area Prescribing Committee (APC) or equivalent reviews the medicine. Despite NICE approval, many APCs run their own review process, causing months of additional delay.',
+      barriers:['NICE TA does not attract additional ring-fenced funding to system level','Many APCs apply additional local economic modelling or budget impact analysis despite NICE approval','Committee meeting dates are not aligned to NICE TA publication, so an appraisal may not go to committee until approx 45 days post-publication','Committees may have a sub-structure which further delays consideration, or the APC may not have adequate budget delegation to approve, requiring escalation and further delays'], tip:null },
+    { type:'commissioning', title:'System budget impact assessment', sub:'Local prevalence and cost modelling', dur:'1\u201312 months',
+      what:'The ICB assesses the local budget impact based on estimated prevalent and incident population, treatment duration, and gross cost, often without visibility of any commercial discount agreed between NHSE and the manufacturer.',
+      barriers:['ICBs work from list price. The real net cost after commercial discount may be substantially lower','NICE estimates are based on clinical trial rather than real-world data','Affordability is not a legitimate reason to withhold a NICE-approved medicine, but in practice, approval for additional in-year investment in a medicine not considered in planning and budget setting is challenging — some medicines may be delayed, officially or unofficially, until the new financial year'], tip:null },
+    { type:'commissioning', title:'Prescribing pathway / RAG classification', sub:'Traffic light or formulary status', dur:'3\u20136 months',
+      what:'The ICB assigns a RAG (red/amber/green) or equivalent classification determining who can prescribe, in what setting, and whether prior approval is needed.',
+      barriers:['NICE approval does not usually dictate the appropriate setting for prescribing. Where it does, this can be problematic as NICE criteria do not necessarily align to local clinical pathways and commissioned services','Criteria for prior approval locally implemented can be more restrictive than the NICE population','This can drive inconsistency between formularies'], tip:null }
+  ]},
+  { label:'Provider /\nsecondary care', nodes:[
+    { type:'operational', title:'Provider Drug & Therapeutics Committee', sub:'Provider formulary decision', dur:'1\u20133 months',
+      what:'Even after ICB approval, individual NHS providers may run their own Drug & Therapeutics Committees (DTCs) or equivalent which make independent formulary decisions.',
+      barriers:['Provider DTCs are independent of ICBs. NICE approval does not bind them; the NICE mandate applies to commissioners','Providers may bear the cost of high-cost drugs under block or tariff contracts, creating a financial incentive to delay or not approve','Some providers add their own clinical or access criteria on top of NICE and ICB criteria'], tip:null },
+    { type:'operational', title:'Service capacity and resource planning', sub:'Can the provider actually deliver the service?', dur:'3\u201312 months',
+      what:'A medicine being on the formulary does not mean the provider can deliver it. New medicines often require additional clinical capacity, administration time, specialist nursing, infusion suite access, or outpatient appointments that do not exist within current resource. Providers must assess whether the service model is deliverable before committing to prescribing.',
+      barriers:['Infusion or administration capacity may be insufficient to absorb new patients without additional investment','Specialist nursing, pharmacy, or clinical time may not be funded within existing contracts','Outpatient appointment demand may not be modelled or planned for','Tariff or block contract income may not cover the full cost of delivering the service, creating a financial disincentive even where clinical will exists'], tip:null }
+  ]},
+  { label:'Shared care', nodes:[
+    { type:'commissioning', title:'Shared care protocol development', sub:'Provider, ICB, and primary care contractor agreement', dur:'6\u201312 months',
+      what:'Where responsibility for ongoing prescribing transfers from secondary to primary care, a shared care protocol (SCP) must be developed and ratified. The SCP defines clinical responsibilities, monitoring requirements, dose titration, and escalation criteria. It must be agreed by the provider, the ICB, and primary care contractors.',
+      barriers:['SCP development and ratification typically takes 6\u201312 months after NICE approval','Liability concerns mean primary care contractors frequently decline shared care for newer or complex medicines'], tip:null },
+    { type:'informal', title:'Primary care contractor acceptance', sub:'Individual contractors must opt in', dur:'6\u201312 months',
+      what:'Even once a shared care protocol is ratified at ICB level, individual primary care contractors must agree to accept shared care responsibilities for their patients. Contractor-level refusal is common and creates unequal access within the same ICB area.',
+      barriers:['No obligation on individual primary care contractors to accept shared care even when the ICB protocol is approved','Shared care is often perceived as above and beyond the primary care contractor core contract. A locally enhanced service may need to be developed, approved, funded and commissioned','Primary care contractors cite workload, indemnity risk, and lack of familiarity with the medicine as reasons to decline','Patients registered with non-accepting contractors must continue receiving prescriptions from secondary care outpatient services, creating inequity and capacity pressure','There is no consistent process for tracking which primary care contractors have accepted shared care within an ICB'], tip:null },
+    { type:'operational', title:'Monitoring and ongoing review', sub:'Sustaining shared care in practice', dur:'Ongoing',
+      what:'Once shared care is live, the primary care contractor takes on responsibility for monitoring, repeat prescribing, and recognising when to escalate back to the specialist. The practical burden of monitoring including blood tests, clinical review and dose adjustment determines whether shared care is sustainable in primary care. There is also published evidence that suggests monitoring of shared care prescribing in primary care is inconsistent and incomplete.',
+      barriers:['Recall mechanisms in primary care can be variable','Monitoring requirements that are burdensome or poorly resourced in primary care lead to incomplete or inadequate monitoring','Patients may not attend monitoring appointments, leaving primary care contractors in an ambiguous liability position'], tip:null }
+  ]},
+  { label:'Primary care', nodes:[
+    { type:'commissioning', title:'Primary care formulary and green listing', sub:'ICB green status enables primary care prescribing', dur:'1\u20133 months',
+      what:'For medicines classified as green on the ICB formulary, primary care contractors can prescribe independently without shared care or specialist involvement.',
+      barriers:['Green listing by the ICB does not guarantee the medicine appears on primary care clinical system formularies or prescribing decision support tools','Clinical system suppliers (EMIS, SystmOne) may not have updated drug records, dosing guidance, or interaction flags for newer medicines','Primary care contractors may be unaware the medicine is green-listed and continue to refer unnecessarily to secondary care'], tip:null },
+    { type:'informal', title:'Primary care prescribing awareness and confidence', sub:'Will the primary care contractor actually prescribe?', dur:'6\u201324 months',
+      what:'Even where a medicine is green-listed and technically prescribable in primary care, prescribing rates depend heavily on awareness, clinical confidence, familiarity with the patient population, and perceived risk.',
+      barriers:['Primary care contractors may be unfamiliar with the condition or indication, particularly for medicines traditionally managed in secondary care','Concern about side effect management, monitoring responsibilities, or patient complexity leads to unnecessary referral or non-prescribing','Prescribing incentive schemes can drive or suppress prescribing depending on how they are designed'], tip:null }
+  ]},
+  { label:'Clinical /\nprescribing', nodes:[
+    { type:'clinical', title:'Specialist clinical eligibility', sub:'Patient meets criteria for treatment', dur:'1\u20133 months',
+      what:'The specialist clinician determines whether the individual patient meets the clinical eligibility criteria set by NICE and/or the local formulary. Criteria may include prior treatment failure, biomarker status, functional scores, or disease staging.',
+      barriers:['Local criteria may be more restrictive than the NICE population without formal justification','Diagnostic tests required to confirm eligibility may not be routinely commissioned or funded','Eligibility criteria can be applied inconsistently between clinicians and between providers','NICE criteria may use surrogate measures not routinely collected in clinical practice'], tip:null },
+    { type:'clinical', title:'Prior approval or exceptionality', sub:'If required by local formulary', dur:'1\u20133 months',
+      what:'Some ICB formularies require clinicians to submit a prior approval request for each patient, even where the medicine is NICE-approved. This creates significant administrative burden and delay.',
+      barriers:['Prior approval processes are primarily designed for medicines without NICE approval. Their application to TA-approved medicines is uncommon but not unheard of','Clinicians may not refer patients rather than complete burdensome paperwork','Approval turnaround can take weeks, delaying treatment'], tip:null },
+    { type:'informal', title:'Clinician awareness and confidence', sub:'Does the prescriber know and trust the medicine?', dur:'6\u201318 months',
+      what:'Even where all formal barriers are cleared, prescribing rates depend on whether clinicians are aware of the medicine, understand the evidence, feel confident in the indication, and see the medicine as part of their clinical routine.',
+      barriers:['Clinicians may be unaware a NICE TA has been published','Habit and inertia favour existing treatments','Concerns about side effects or monitoring requirements reduce prescribing confidence. Where new side effects emerge clinician confidence can be profoundly impaired','One enthusiastic early adopter can account for a disproportionate share of early prescribing'], tip:null }
+  ]},
+  { label:'Patient /\naccess', nodes:[
+    { type:'informal', title:'Patient awareness and referral', sub:'Does the patient know to ask?', dur:'Variable',
+      what:'Patients may not know a new treatment exists, may not be referred to the right specialist, or may not be empowered to ask about alternatives. This is particularly significant in conditions where patients are older, less health-literate, or socially disadvantaged.',
+      barriers:['Patient information does not automatically accompany NICE approvals','Primary care contractors may be unaware of new treatments and not refer','Patients from deprived populations are less likely to self-advocate','Language, literacy, and digital access barriers compound awareness gaps'], tip:null },
+    { type:'clinical', title:'Consent, monitoring and adherence', sub:'Ongoing access is not automatic', dur:'Ongoing',
+      what:'Once a patient is prescribed, ongoing access depends on successful consent, required monitoring tests, tolerability, and adherence. For many medicines these are complex, ongoing requirements.',
+      barriers:['Monitoring requirements may not be resourced in the prescribing setting','Patient adherence may be lower than in trial conditions','Some medicines require dispensing in a specific setting. Travel burden affects adherence','Discontinuation criteria may result in patients losing access even when they wish to continue'], tip:null }
+  ]}
+];
 
-    const tag = document.createElement('div');
-    tag.className = 'stage-tag';
-    tag.style.cssText = stage.optional
-      ? 'background:transparent;color:#2F6B5F;border:1px dashed #2F6B5F88;'
-      : 'background:#DCE7E3;color:#1C4A3F;';
-    tag.textContent = stage.label.replace('\n', ' ');
-    labelEl.appendChild(tag);
+var active = {};
+lanes.forEach(function(l){ active[l.key] = true; });
 
-    if (stage.optional) {
-      const oh = document.createElement('div');
-      oh.className = 'opt-hint';
-      oh.textContent = 'if applicable';
-      labelEl.appendChild(oh);
-    }
+function clockSvg(col) {
+  return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+}
 
-    const content = document.createElement('div');
-    content.className = 'stage-content' + (stage.optional ? ' dashed' : '');
-
-    const nodeRow = document.createElement('div');
-    nodeRow.className = 'node-row';
-
-    stage.nodes.forEach(node => {
-      if (node.excluded) {
-        const n = document.createElement('div');
-        n.className = 'node-excluded';
-        n.innerHTML = '<div class="node-title">' + node.title + '</div><div class="node-sub">' + node.sub + '</div><div><span class="excl-badge">' + node.badge + '</span></div>';
-        nodeRow.appendChild(n);
-        return;
-      }
-      const col = C[node.type];
-      const n = document.createElement('div');
-      n.className = 'node';
-      n.style.background = col.bg;
-      n.style.borderColor = col.border;
-      if (node.optional) n.style.borderStyle = 'dashed';
-      n.innerHTML = '<div class="node-title" style="color:' + col.title + '">' + node.title + '</div><div class="node-sub" style="color:' + col.sub + '">' + node.sub + '</div>' + (node.optional ? '<div><span class="opt-badge">Optional step</span></div>' : '');
-      n.onclick = () => openPanel(node, stage.label.replace('\n', ' '));
-      nodeRow.appendChild(n);
-    });
-
-    content.appendChild(nodeRow);
-
-    if (si < stages.length - 1) {
-      const arr = document.createElement('div');
-      arr.className = 'arrow-row';
-      arr.innerHTML = '<svg width="14" height="18" viewBox="0 0 14 18"><path d="M7 0 L7 12 M3 8 L7 12 L11 8" fill="none" stroke="#2F6B5F66" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>';
-      content.appendChild(arr);
-    }
-
-    stageEl.appendChild(labelEl);
-    stageEl.appendChild(content);
-    flow.appendChild(stageEl);
+function buildToggles() {
+  var cont = document.getElementById('toggles');
+  lanes.forEach(function(l) {
+    var b = document.createElement('button');
+    b.className = 'tog';
+    b.textContent = l.label;
+    b.style.cssText = 'background:'+l.togBg+';color:'+l.togText+';border-color:'+l.togBorder+';';
+    b.onclick = function() {
+      active[l.key] = !active[l.key];
+      b.classList.toggle('off', !active[l.key]);
+      document.querySelectorAll('.lane-cell[data-lane="'+l.key+'"]').forEach(function(c){ c.classList.toggle('hidden', !active[l.key]); });
+      document.querySelectorAll('.col-header[data-lane="'+l.key+'"]').forEach(function(c){ c.style.opacity = active[l.key] ? '1' : '0.3'; });
+    };
+    cont.appendChild(b);
   });
 }
 
-function openPanel(node, stageLabel) {
-  const col = C[node.type];
-  const content = document.getElementById('detail-content');
-  const barriersHtml = node.barriers.map(b => '<li>' + b + '</li>').join('');
-  const tipHtml = node.tip ? '<h3>Pharma insight</h3><div class="insight-box">' + node.tip + '</div>' : '';
-  content.innerHTML =
-    '<div class="detail-type" style="background:' + col.typeBg + ';color:' + col.typeText + '">' + typeLabels[node.type] + '</div>' +
-    '<h2>' + node.title + '</h2>' +
-    '<div class="detail-stage">' + stageLabel + (node.optional ? ' &middot; Optional step' : '') + '</div>' +
-    '<h3>What this is</h3><p>' + node.what + '</p>' +
-    '<h3>Key barriers</h3><ul>' + barriersHtml + '</ul>' +
+function buildGrid() {
+  var grid = document.getElementById('grid');
+  grid.style.gridTemplateColumns = '110px ' + lanes.map(function(){ return '1fr'; }).join(' ');
+
+  var spacer = document.createElement('div');
+  spacer.style.cssText = 'padding:6px 0;';
+  grid.appendChild(spacer);
+
+  lanes.forEach(function(l) {
+    var h = document.createElement('div');
+    h.className = 'col-header';
+    h.dataset.lane = l.key;
+    h.style.cssText = 'background:'+l.hBg+';color:'+l.hText+';';
+    h.textContent = l.label;
+    grid.appendChild(h);
+  });
+
+  stages.forEach(function(stage) {
+    var labelCell = document.createElement('div');
+    labelCell.className = 'stage-label-cell';
+    var pill = document.createElement('div');
+    pill.className = 'stage-pill';
+    pill.textContent = stage.label.replace('\n',' ');
+    labelCell.appendChild(pill);
+    grid.appendChild(labelCell);
+
+    lanes.forEach(function(lane) {
+      var cell = document.createElement('div');
+      cell.className = 'lane-cell';
+      cell.dataset.lane = lane.key;
+
+      var matching = stage.nodes.filter(function(n){ return n.type === lane.key; });
+      var excluded = lane.key === 'formal' ? stage.nodes.filter(function(n){ return n.type === 'excluded'; }) : [];
+
+      matching.forEach(function(node) {
+        var n = document.createElement('div');
+        n.className = 'node';
+        n.style.background = lane.bg;
+        n.style.borderColor = lane.border;
+        var durHtml = node.dur ? '<div class="node-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></div>' : '';
+        n.innerHTML = '<div class="node-title" style="color:'+lane.tc+'">'+node.title+'</div><div class="node-sub" style="color:'+lane.sc+'">'+node.sub+'</div>'+durHtml;
+        n.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
+        cell.appendChild(n);
+      });
+
+      excluded.forEach(function(node) {
+        var n = document.createElement('div');
+        n.className = 'node-excl';
+        n.innerHTML = '<div class="node-title">'+node.title+'</div><div class="node-sub">'+node.sub+'</div><div><span class="excl-badge">'+node.badge+'</span></div>';
+        cell.appendChild(n);
+      });
+
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function openPanel(node, stageLabel, lane) {
+  var c = document.getElementById('panel-content');
+  var durHtml = node.dur ? '<div class="panel-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></div>' : '';
+  var barriersHtml = node.barriers.map(function(b){ return '<li>'+b+'</li>'; }).join('');
+  var tipHtml = node.tip ? '<h3>Insight</h3><div class="insight">'+node.tip+'</div>' : '';
+  c.innerHTML =
+    '<div class="panel-type" style="background:'+lane.togBg+';color:'+lane.togText+'">'+typeLabels[node.type]+'</div>'+
+    '<h2>'+node.title+'</h2>'+
+    '<div class="panel-stage">'+stageLabel+'</div>'+
+    durHtml+
+    '<h3>What this is</h3><p>'+node.what+'</p>'+
+    '<h3>Key barriers</h3><ul>'+barriersHtml+'</ul>'+
     tipHtml;
-  document.getElementById('detail').classList.add('open');
+  document.getElementById('panel').classList.add('open');
   document.getElementById('overlay').classList.add('open');
 }
 
 function closePanel() {
-  document.getElementById('detail').classList.remove('open');
+  document.getElementById('panel').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
 }
 
-renderFlow();
+buildToggles();
+buildGrid();
 </script>
 </body>
 </html>
