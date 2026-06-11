@@ -19,39 +19,41 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .scope strong { font-weight: 600; }
 .concurrent-note { font-size: 11px; padding: 8px 12px; background: #F6F5F2; border: 1px solid #DCE7E3; border-radius: 6px; margin-bottom: 1.25rem; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; font-style: italic; }
 
-.controls-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; margin-bottom: 1.25rem; }
-.control-group { display: flex; flex-direction: column; gap: 5px; }
-.control-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; }
-.tog-row { display: flex; flex-wrap: wrap; gap: 5px; }
-.tog { font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600; padding: 4px 11px; border-radius: 20px; border: 1.5px solid transparent; cursor: pointer; transition: opacity 0.15s; user-select: none; }
-.tog.off { opacity: 0.35; }
-.constraint-tog { font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600; padding: 4px 11px; border-radius: 20px; border: 1.5px solid transparent; cursor: pointer; transition: all 0.15s; user-select: none; }
-.constraint-tog.active { opacity: 1; }
-.constraint-tog.inactive { opacity: 0.35; }
-
-.legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 1.5rem; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #6F6F6F; }
-.leg-item { display: flex; align-items: center; gap: 6px; }
-.leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.controls-row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 1.25rem; }
+.control-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; margin-right: 4px; }
+.constraint-tog { font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600; padding: 4px 11px; border-radius: 20px; border: 1.5px solid transparent; cursor: pointer; transition: opacity 0.15s; user-select: none; opacity: 0.4; }
+.constraint-tog.on { opacity: 1; }
 
 .grid-outer { overflow-x: auto; }
 .grid { display: grid; min-width: 700px; }
-.col-header { font-size: 10px; font-weight: 700; font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 6px 4px; border-radius: 6px 6px 0 0; letter-spacing: 0.04em; text-transform: uppercase; }
+
+.col-header {
+  font-size: 10px; font-weight: 700; font-family: 'Helvetica Neue', Arial, sans-serif;
+  text-align: center; padding: 7px 4px; border-radius: 6px 6px 0 0;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  cursor: pointer; user-select: none;
+  transition: opacity 0.15s;
+  position: relative;
+}
+.col-header:hover { filter: brightness(0.93); }
+.col-header.off { opacity: 0.4; }
+.col-header .hide-hint { font-size: 9px; font-weight: 400; display: block; margin-top: 2px; opacity: 0.7; text-transform: none; letter-spacing: 0; }
+
 .stage-label-cell { display: flex; align-items: flex-start; padding: 10px 8px 10px 0; border-bottom: 1px solid #DCE7E3; }
 .stage-pill { font-size: 10px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 3px 8px; border-radius: 20px; background: #DCE7E3; color: #1C4A3F; white-space: nowrap; }
 .lane-cell { padding: 8px 4px; border-bottom: 1px solid #DCE7E3; border-left: 1px solid #DCE7E3; display: flex; flex-direction: column; gap: 5px; min-height: 60px; transition: opacity 0.2s; }
 .lane-cell.hidden { opacity: 0; pointer-events: none; }
 
-.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s; font-family: 'Helvetica Neue', Arial, sans-serif; position: relative; }
+.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .node:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(47,107,95,0.15); }
-.node.constraint-dim { opacity: 0.2; }
+.node.constraint-dim { opacity: 0.18; }
 .node-title { font-weight: 600; font-size: 11px; margin-bottom: 2px; line-height: 1.3; }
 .node-sub { font-size: 10px; line-height: 1.3; margin-bottom: 3px; }
 .node-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; align-items: center; }
-.node-dur { display: flex; align-items: center; gap: 3px; }
+.node-dur { display: inline-flex; align-items: center; gap: 3px; }
 .node-dur span { font-size: 10px; font-weight: 600; }
-.constraint-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+.constraint-badge { display: inline-flex; align-items: center; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
 .node-cs-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 8px; background: #1C4A3F; color: #DCE7E3; }
-
 .node-excl { opacity: 0.45; border-radius: 6px; padding: 8px 10px; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; border: 1px dashed #6F6F6F55; }
 .node-excl .node-title { text-decoration: line-through; font-weight: 600; }
 .node-excl .node-sub { font-size: 10px; }
@@ -81,7 +83,6 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .case-body { font-size: 11px; line-height: 1.6; color: #C8DED9; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .case-tag { display: inline-block; font-size: 9px; padding: 2px 7px; border-radius: 10px; background: #2F6B5F; color: #DCE7E3; margin-top: 8px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .case-link { display: inline-block; font-size: 10px; color: #9ECFC4; margin-top: 8px; margin-left: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; text-decoration: underline; cursor: pointer; }
-
 .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #DCE7E3; display: flex; align-items: center; gap: 8px; }
 .footer-bar { width: 3px; height: 24px; background: #2F6B5F; border-radius: 2px; }
 .footer-txt { font-size: 11px; color: #6F6F6F; font-style: italic; font-family: Georgia, serif; }
@@ -98,28 +99,13 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
     </div>
   </div>
   <div class="page-title">Approval to Access: The 90 Day Myth</div>
-  <div class="page-sub">Every gate a medicine must pass after a positive NICE technology appraisal. Click any node for detail.</div>
+  <div class="page-sub">Every gate a medicine must pass after a positive NICE technology appraisal. Click any node for detail. Click a column header to hide or show that barrier type.</div>
   <div class="scope"><strong>Scope:</strong> This flow covers medicines commissioned by ICBs following routine NICE technology appraisal. <strong>Specialised commissioning (NHS England direct) is out of scope</strong> — that pathway diverges at NICE publication and follows a separate route toward implementation.</div>
   <div class="concurrent-note">Note: many of these steps run concurrently rather than sequentially. Duration estimates reflect typical elapsed time for each step in isolation.</div>
 
   <div class="controls-row">
-    <div class="control-group">
-      <div class="control-label">Filter by barrier type</div>
-      <div class="tog-row" id="toggles"></div>
-    </div>
-    <div class="control-group">
-      <div class="control-label">Filter by constraint</div>
-      <div class="tog-row" id="constraint-toggles"></div>
-    </div>
-  </div>
-
-  <div class="legend">
-    <div class="leg-item"><div class="leg-dot" style="background:#2F6B5F"></div><span>Formal / regulatory</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#4A7FA5"></div><span>Commissioning / funding</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#8B5E3C"></div><span>Operational / supply</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#5C6B47"></div><span>Clinical / prescribing</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#7A5C6E"></div><span>Informal / cultural</span></div>
-    <div class="leg-item"><div class="leg-dot" style="background:#6F6F6F"></div><span>Out of scope</span></div>
+    <span class="control-label">Filter by constraint:</span>
+    <div id="constraint-toggles"></div>
   </div>
 
   <div class="grid-outer"><div class="grid" id="grid"></div></div>
@@ -135,11 +121,11 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 </div>
 <script>
 var lanes = [
-  { key:'formal',        label:'Formal / regulatory',    bg:'#E8F0EE', border:'#2F6B5F44', tc:'#1C4A3F', sc:'#2F6B5F', togBg:'#DCE7E3', togText:'#1C4A3F', togBorder:'#2F6B5F', hBg:'#DCE7E3', hText:'#1C4A3F' },
-  { key:'commissioning', label:'Commissioning / funding', bg:'#E8EFF5', border:'#4A7FA544', tc:'#2A4F6A', sc:'#4A7FA5', togBg:'#D8E8F2', togText:'#2A4F6A', togBorder:'#4A7FA5', hBg:'#D8E8F2', hText:'#2A4F6A' },
-  { key:'operational',   label:'Operational / supply',   bg:'#F2EAE2', border:'#8B5E3C44', tc:'#5C3A20', sc:'#8B5E3C', togBg:'#EDD9C8', togText:'#5C3A20', togBorder:'#8B5E3C', hBg:'#EDD9C8', hText:'#5C3A20' },
-  { key:'clinical',      label:'Clinical / prescribing', bg:'#EBF0E5', border:'#5C6B4744', tc:'#3A4A2A', sc:'#5C6B47', togBg:'#D8E5CC', togText:'#3A4A2A', togBorder:'#5C6B47', hBg:'#D8E5CC', hText:'#3A4A2A' },
-  { key:'informal',      label:'Informal / cultural',    bg:'#EEE8EC', border:'#7A5C6E44', tc:'#4A3040', sc:'#7A5C6E', togBg:'#E2D4DC', togText:'#4A3040', togBorder:'#7A5C6E', hBg:'#E2D4DC', hText:'#4A3040' }
+  { key:'formal',        label:'Formal / regulatory',    bg:'#E8F0EE', border:'#2F6B5F44', tc:'#1C4A3F', sc:'#2F6B5F', togBg:'#DCE7E3', togText:'#1C4A3F', hBg:'#DCE7E3', hText:'#1C4A3F' },
+  { key:'commissioning', label:'Commissioning / funding', bg:'#E8EFF5', border:'#4A7FA544', tc:'#2A4F6A', sc:'#4A7FA5', togBg:'#D8E8F2', togText:'#2A4F6A', hBg:'#D8E8F2', hText:'#2A4F6A' },
+  { key:'operational',   label:'Operational / supply',   bg:'#F2EAE2', border:'#8B5E3C44', tc:'#5C3A20', sc:'#8B5E3C', togBg:'#EDD9C8', togText:'#5C3A20', hBg:'#EDD9C8', hText:'#5C3A20' },
+  { key:'clinical',      label:'Clinical / prescribing', bg:'#EBF0E5', border:'#5C6B4744', tc:'#3A4A2A', sc:'#5C6B47', togBg:'#D8E5CC', togText:'#3A4A2A', hBg:'#D8E5CC', hText:'#3A4A2A' },
+  { key:'informal',      label:'Informal / cultural',    bg:'#EEE8EC', border:'#7A5C6E44', tc:'#4A3040', sc:'#7A5C6E', togBg:'#E2D4DC', togText:'#4A3040', hBg:'#E2D4DC', hText:'#4A3040' }
 ];
 var typeLabels = { formal:'Formal / regulatory', commissioning:'Commissioning / funding', operational:'Operational / supply', clinical:'Clinical / prescribing', informal:'Informal / cultural' };
 var constraints = {
@@ -148,6 +134,8 @@ var constraints = {
   confidence:    { label:'Clinical confidence', bg:'#F0EBF8', text:'#4A2A6A', border:'#8050C0' }
 };
 var activeConstraints = { affordability: false, capacity: false, confidence: false };
+var activeLanes = {};
+lanes.forEach(function(l){ activeLanes[l.key] = true; });
 
 var stages = [
   { label:'NICE approval', nodes:[
@@ -227,8 +215,15 @@ var stages = [
   ]}
 ];
 
-var active = {};
-lanes.forEach(function(l){ active[l.key] = true; });
+function anyConstraintActive() {
+  return activeConstraints.affordability || activeConstraints.capacity || activeConstraints.confidence;
+}
+function applyConstraintFilter() {
+  document.querySelectorAll('.node[data-constraint]').forEach(function(el) {
+    var c = el.dataset.constraint;
+    el.classList.toggle('constraint-dim', anyConstraintActive() && !activeConstraints[c]);
+  });
+}
 
 function clockSvg(col) {
   return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
@@ -237,68 +232,50 @@ function bookSvg() {
   return '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#DCE7E3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
 }
 
-function anyConstraintActive() {
-  return activeConstraints.affordability || activeConstraints.capacity || activeConstraints.confidence;
-}
-
-function applyConstraintFilter() {
-  document.querySelectorAll('.node[data-constraint]').forEach(function(el) {
-    var c = el.dataset.constraint;
-    if (!anyConstraintActive() || activeConstraints[c]) {
-      el.classList.remove('constraint-dim');
-    } else {
-      el.classList.add('constraint-dim');
-    }
-  });
-}
-
-function buildToggles() {
-  var cont = document.getElementById('toggles');
-  lanes.forEach(function(l) {
-    var b = document.createElement('button');
-    b.className = 'tog';
-    b.textContent = l.label;
-    b.style.cssText = 'background:'+l.togBg+';color:'+l.togText+';border-color:'+l.togBorder+';';
-    b.onclick = function() {
-      active[l.key] = !active[l.key];
-      b.classList.toggle('off', !active[l.key]);
-      document.querySelectorAll('.lane-cell[data-lane="'+l.key+'"]').forEach(function(c){ c.classList.toggle('hidden', !active[l.key]); });
-      document.querySelectorAll('.col-header[data-lane="'+l.key+'"]').forEach(function(c){ c.style.opacity = active[l.key] ? '1' : '0.3'; });
-    };
-    cont.appendChild(b);
-  });
-
-  var ctCont = document.getElementById('constraint-toggles');
+function buildConstraintToggles() {
+  var cont = document.getElementById('constraint-toggles');
   Object.keys(constraints).forEach(function(key) {
     var c = constraints[key];
     var b = document.createElement('button');
-    b.className = 'constraint-tog inactive';
+    b.className = 'constraint-tog';
     b.textContent = c.label;
     b.style.cssText = 'background:'+c.bg+';color:'+c.text+';border-color:'+c.border+';';
     b.onclick = function() {
       activeConstraints[key] = !activeConstraints[key];
-      b.classList.toggle('active', activeConstraints[key]);
-      b.classList.toggle('inactive', !activeConstraints[key]);
+      b.classList.toggle('on', activeConstraints[key]);
       applyConstraintFilter();
     };
-    ctCont.appendChild(b);
+    cont.appendChild(b);
   });
 }
 
 function buildGrid() {
   var grid = document.getElementById('grid');
   grid.style.gridTemplateColumns = '110px ' + lanes.map(function(){ return '1fr'; }).join(' ');
+
+  // spacer for label column
   var spacer = document.createElement('div');
   spacer.style.cssText = 'padding:6px 0;';
   grid.appendChild(spacer);
+
+  // clickable column headers
   lanes.forEach(function(l) {
     var h = document.createElement('div');
     h.className = 'col-header';
-    h.dataset.lane = l.key;
+    h.id = 'hdr-' + l.key;
     h.style.cssText = 'background:'+l.hBg+';color:'+l.hText+';';
-    h.textContent = l.label;
+    h.innerHTML = l.label + '<span class="hide-hint">click to hide</span>';
+    h.onclick = function() {
+      activeLanes[l.key] = !activeLanes[l.key];
+      h.classList.toggle('off', !activeLanes[l.key]);
+      h.querySelector('.hide-hint').textContent = activeLanes[l.key] ? 'click to hide' : 'click to show';
+      document.querySelectorAll('.lane-cell[data-lane="'+l.key+'"]').forEach(function(c){
+        c.classList.toggle('hidden', !activeLanes[l.key]);
+      });
+    };
     grid.appendChild(h);
   });
+
   stages.forEach(function(stage) {
     var labelCell = document.createElement('div');
     labelCell.className = 'stage-label-cell';
@@ -307,12 +284,15 @@ function buildGrid() {
     pill.textContent = stage.label.replace('\n',' ');
     labelCell.appendChild(pill);
     grid.appendChild(labelCell);
+
     lanes.forEach(function(lane) {
       var cell = document.createElement('div');
       cell.className = 'lane-cell';
       cell.dataset.lane = lane.key;
+
       var matching = stage.nodes.filter(function(n){ return n.type === lane.key; });
       var excluded = lane.key === 'formal' ? stage.nodes.filter(function(n){ return n.type === 'excluded'; }) : [];
+
       matching.forEach(function(node) {
         var n = document.createElement('div');
         n.className = 'node';
@@ -330,12 +310,14 @@ function buildGrid() {
         n.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
         cell.appendChild(n);
       });
+
       excluded.forEach(function(node) {
         var n = document.createElement('div');
         n.className = 'node-excl';
         n.innerHTML = '<div class="node-title">'+node.title+'</div><div class="node-sub">'+node.sub+'</div><div><span class="excl-badge">'+node.badge+'</span></div>';
         cell.appendChild(n);
       });
+
       grid.appendChild(cell);
     });
   });
@@ -369,7 +351,7 @@ function closePanel() {
   document.getElementById('overlay').classList.remove('open');
 }
 
-buildToggles();
+buildConstraintToggles();
 buildGrid();
 </script>
 </body>
