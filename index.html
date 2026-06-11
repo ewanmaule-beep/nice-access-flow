@@ -17,13 +17,22 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .page-sub { font-size: 13px; color: #6F6F6F; margin-bottom: 1.25rem; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.5; }
 .scope { font-size: 12px; padding: 10px 14px; background: #DCE7E3; border-left: 3px solid #2F6B5F; border-radius: 0 6px 6px 0; margin-bottom: 1rem; color: #1E1E1E; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.55; }
 .scope strong { font-weight: 600; }
-.concurrent-note { font-size: 11px; padding: 8px 12px; background: #F6F5F2; border: 1px solid #DCE7E3; border-radius: 6px; margin-bottom: 1.5rem; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; font-style: italic; }
-.toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+.concurrent-note { font-size: 11px; padding: 8px 12px; background: #F6F5F2; border: 1px solid #DCE7E3; border-radius: 6px; margin-bottom: 1.25rem; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; font-style: italic; }
+
+.controls-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: flex-start; margin-bottom: 1.25rem; }
+.control-group { display: flex; flex-direction: column; gap: 5px; }
+.control-label { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.tog-row { display: flex; flex-wrap: wrap; gap: 5px; }
 .tog { font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600; padding: 4px 11px; border-radius: 20px; border: 1.5px solid transparent; cursor: pointer; transition: opacity 0.15s; user-select: none; }
 .tog.off { opacity: 0.35; }
+.constraint-tog { font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; font-weight: 600; padding: 4px 11px; border-radius: 20px; border: 1.5px solid transparent; cursor: pointer; transition: all 0.15s; user-select: none; }
+.constraint-tog.active { opacity: 1; }
+.constraint-tog.inactive { opacity: 0.35; }
+
 .legend { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-bottom: 1.5rem; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #6F6F6F; }
 .leg-item { display: flex; align-items: center; gap: 6px; }
 .leg-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
 .grid-outer { overflow-x: auto; }
 .grid { display: grid; min-width: 700px; }
 .col-header { font-size: 10px; font-weight: 700; font-family: 'Helvetica Neue', Arial, sans-serif; text-align: center; padding: 6px 4px; border-radius: 6px 6px 0 0; letter-spacing: 0.04em; text-transform: uppercase; }
@@ -31,25 +40,31 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .stage-pill { font-size: 10px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 3px 8px; border-radius: 20px; background: #DCE7E3; color: #1C4A3F; white-space: nowrap; }
 .lane-cell { padding: 8px 4px; border-bottom: 1px solid #DCE7E3; border-left: 1px solid #DCE7E3; display: flex; flex-direction: column; gap: 5px; min-height: 60px; transition: opacity 0.2s; }
 .lane-cell.hidden { opacity: 0; pointer-events: none; }
-.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s; font-family: 'Helvetica Neue', Arial, sans-serif; position: relative; }
+
+.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s, opacity 0.2s; font-family: 'Helvetica Neue', Arial, sans-serif; position: relative; }
 .node:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(47,107,95,0.15); }
+.node.constraint-dim { opacity: 0.2; }
 .node-title { font-weight: 600; font-size: 11px; margin-bottom: 2px; line-height: 1.3; }
-.node-sub { font-size: 10px; line-height: 1.3; margin-bottom: 4px; }
-.node-dur { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
-.node-dur svg { flex-shrink: 0; }
+.node-sub { font-size: 10px; line-height: 1.3; margin-bottom: 3px; }
+.node-badges { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 4px; align-items: center; }
+.node-dur { display: flex; align-items: center; gap: 3px; }
 .node-dur span { font-size: 10px; font-weight: 600; }
-.node-cs-badge { display: inline-flex; align-items: center; gap: 3px; margin-top: 5px; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 8px; background: #1C4A3F; color: #DCE7E3; }
+.constraint-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 8px; text-transform: uppercase; letter-spacing: 0.04em; }
+.node-cs-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 8px; background: #1C4A3F; color: #DCE7E3; }
+
 .node-excl { opacity: 0.45; border-radius: 6px; padding: 8px 10px; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; border: 1px dashed #6F6F6F55; }
 .node-excl .node-title { text-decoration: line-through; font-weight: 600; }
 .node-excl .node-sub { font-size: 10px; }
 .excl-badge { font-size: 9px; padding: 1px 5px; border-radius: 8px; background: #6F6F6F22; color: #6F6F6F; display: inline-block; margin-top: 3px; }
+
 .panel-overlay { display: none; position: fixed; inset: 0; background: rgba(30,30,30,0.18); z-index: 99; }
 .panel-overlay.open { display: block; }
 .panel { position: fixed; top: 0; right: 0; width: 340px; height: 100%; background: #F6F5F2; border-left: 1px solid #DCE7E3; padding: 28px 22px; overflow-y: auto; transform: translateX(100%); transition: transform 0.2s ease; z-index: 100; }
 .panel.open { transform: translateX(0); }
 .panel-close { float: right; background: none; border: 1px solid #DCE7E3; border-radius: 5px; padding: 3px 9px; cursor: pointer; font-size: 11px; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .panel-close:hover { background: #DCE7E3; }
-.panel-type { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin-bottom: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 0.03em; }
+.panel-type { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 600; margin-bottom: 6px; font-family: 'Helvetica Neue', Arial, sans-serif; letter-spacing: 0.03em; }
+.panel-constraint { display: inline-block; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: 700; margin-bottom: 8px; margin-left: 5px; font-family: 'Helvetica Neue', Arial, sans-serif; text-transform: uppercase; letter-spacing: 0.04em; }
 .panel-dur { display: flex; align-items: center; gap: 5px; margin-bottom: 12px; }
 .panel-dur span { font-size: 11px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .panel h2 { font-size: 15px; font-weight: 700; margin: 0 0 3px; color: #1E1E1E; }
@@ -66,6 +81,7 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .case-body { font-size: 11px; line-height: 1.6; color: #C8DED9; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .case-tag { display: inline-block; font-size: 9px; padding: 2px 7px; border-radius: 10px; background: #2F6B5F; color: #DCE7E3; margin-top: 8px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; }
 .case-link { display: inline-block; font-size: 10px; color: #9ECFC4; margin-top: 8px; margin-left: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; text-decoration: underline; cursor: pointer; }
+
 .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #DCE7E3; display: flex; align-items: center; gap: 8px; }
 .footer-bar { width: 3px; height: 24px; background: #2F6B5F; border-radius: 2px; }
 .footer-txt { font-size: 11px; color: #6F6F6F; font-style: italic; font-family: Georgia, serif; }
@@ -85,7 +101,18 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
   <div class="page-sub">Every gate a medicine must pass after a positive NICE technology appraisal. Click any node for detail.</div>
   <div class="scope"><strong>Scope:</strong> This flow covers medicines commissioned by ICBs following routine NICE technology appraisal. <strong>Specialised commissioning (NHS England direct) is out of scope</strong> — that pathway diverges at NICE publication and follows a separate route toward implementation.</div>
   <div class="concurrent-note">Note: many of these steps run concurrently rather than sequentially. Duration estimates reflect typical elapsed time for each step in isolation.</div>
-  <div class="toggles" id="toggles"></div>
+
+  <div class="controls-row">
+    <div class="control-group">
+      <div class="control-label">Filter by barrier type</div>
+      <div class="tog-row" id="toggles"></div>
+    </div>
+    <div class="control-group">
+      <div class="control-label">Filter by constraint</div>
+      <div class="tog-row" id="constraint-toggles"></div>
+    </div>
+  </div>
+
   <div class="legend">
     <div class="leg-item"><div class="leg-dot" style="background:#2F6B5F"></div><span>Formal / regulatory</span></div>
     <div class="leg-item"><div class="leg-dot" style="background:#4A7FA5"></div><span>Commissioning / funding</span></div>
@@ -94,6 +121,7 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
     <div class="leg-item"><div class="leg-dot" style="background:#7A5C6E"></div><span>Informal / cultural</span></div>
     <div class="leg-item"><div class="leg-dot" style="background:#6F6F6F"></div><span>Out of scope</span></div>
   </div>
+
   <div class="grid-outer"><div class="grid" id="grid"></div></div>
   <div class="footer">
     <div class="footer-bar"></div>
@@ -114,91 +142,116 @@ var lanes = [
   { key:'informal',      label:'Informal / cultural',    bg:'#EEE8EC', border:'#7A5C6E44', tc:'#4A3040', sc:'#7A5C6E', togBg:'#E2D4DC', togText:'#4A3040', togBorder:'#7A5C6E', hBg:'#E2D4DC', hText:'#4A3040' }
 ];
 var typeLabels = { formal:'Formal / regulatory', commissioning:'Commissioning / funding', operational:'Operational / supply', clinical:'Clinical / prescribing', informal:'Informal / cultural' };
+var constraints = {
+  affordability: { label:'Affordability', bg:'#FDF0E0', text:'#7A4500', border:'#E8A030' },
+  capacity:      { label:'Capacity',      bg:'#E8EEF8', text:'#2A3A6A', border:'#5070C0' },
+  confidence:    { label:'Clinical confidence', bg:'#F0EBF8', text:'#4A2A6A', border:'#8050C0' }
+};
+var activeConstraints = { affordability: false, capacity: false, confidence: false };
+
 var stages = [
   { label:'NICE approval', nodes:[
-    { type:'formal', title:'NICE technology appraisal', sub:'Positive recommendation issued', dur:null,
+    { type:'formal', constraint:'affordability', title:'NICE technology appraisal', sub:'Positive recommendation issued', dur:null,
       what:'NICE issues a positive technology appraisal (TA) recommendation. This triggers a legal obligation for the NHS in England to fund the medicine, typically within 90 days of the final guidance date.',
       barriers:['Mandatory funding direction applies to routine commissioning TAs only — not NICE guidelines, pathways, or evidence reviews','Conditional approval with managed access creates ongoing uncertainty about long-term routine commissioning','Some TAs are approved only for a sub-population narrower than the licensed indication'], tip:null, cs:null },
     { type:'excluded', title:'Specialised commissioning', sub:'NHS England direct — out of scope', badge:'Out of scope' }
   ]},
   { label:'ICB / system', nodes:[
-    { type:'commissioning', title:'ICB medicines decision making committee review', sub:'Area Prescribing Committee or equivalent', dur:'2\u20136 months',
+    { type:'commissioning', constraint:'affordability', title:'ICB medicines decision making committee review', sub:'Area Prescribing Committee or equivalent', dur:'2\u20136 months',
       what:'The ICB Area Prescribing Committee (APC) or equivalent reviews the medicine. Despite NICE approval, many APCs run their own review process, causing months of additional delay.',
       barriers:['NICE TA does not attract additional ring-fenced funding to system level','Many APCs apply additional local economic modelling or budget impact analysis despite NICE approval','Committee meeting dates are not aligned to NICE TA publication, so an appraisal may not go to committee until approx 45 days post-publication','Committees may have a sub-structure which further delays consideration, or the APC may not have adequate budget delegation to approve, requiring escalation and further delays'], tip:null, cs:null },
-    { type:'commissioning', title:'System budget impact assessment', sub:'Local prevalence and cost modelling', dur:'1\u201312 months',
+    { type:'commissioning', constraint:'affordability', title:'System budget impact assessment', sub:'Local prevalence and cost modelling', dur:'1\u201312 months',
       what:'The ICB assesses the local budget impact based on estimated prevalent and incident population, treatment duration, and gross cost, often without visibility of any commercial discount agreed between NHSE and the manufacturer.',
       barriers:['ICBs work from list price. The real net cost after commercial discount may be substantially lower','NICE estimates are based on clinical trial rather than real-world data','Affordability is not a legitimate reason to withhold a NICE-approved medicine, but in practice, approval for additional in-year investment in a medicine not considered in planning and budget setting is challenging. Some medicines may be delayed, officially or unofficially, until the new financial year'], tip:null,
       cs:{ title:'GLP-1 receptor agonists (semaglutide, tirzepatide)', body:'NICE approved semaglutide for obesity in 2023, with an eligible population estimated at 3.4 million people in England. NHS England invoked a funding variation, phasing access over three years and initially limiting treatment to specialist weight management services. The result was a vast gap between eligible patients and those receiving NHS treatment — NHS prescriptions currently account for less than 10% of the estimated 2.4 million people in the UK accessing these medicines. Access has not simply shifted to those who can afford private treatment. Many patients have changed their treatment habits due to cost, with some turning to unverified sources. In 2025, the MHRA seized approximately 20 million doses of illegal weight loss medicines with an estimated street value of £45 million, and at least one confirmed death has been linked to counterfeit product. The funding variation mechanism protected NHS finances but contributed to a patient safety crisis in the unregulated market it helped create.', tag:'ICB / system — commissioning / funding', link:'https://www.england.nhs.uk/ourwork/prevention/obesity/medicines-for-obesity/weight-management-injections/' }
     },
-    { type:'commissioning', title:'Prescribing pathway / RAG classification', sub:'Traffic light or formulary status', dur:'3\u20136 months',
+    { type:'commissioning', constraint:'confidence', title:'Prescribing pathway / RAG classification', sub:'Traffic light or formulary status', dur:'3\u20136 months',
       what:'The ICB assigns a RAG (red/amber/green) or equivalent classification determining who can prescribe, in what setting, and whether prior approval is needed.',
       barriers:['NICE approval does not usually dictate the appropriate setting for prescribing. Where it does, this can be problematic as NICE criteria do not necessarily align to local clinical pathways and commissioned services','Criteria for prior approval locally implemented can be more restrictive than the NICE population','This can drive inconsistency between formularies'], tip:null, cs:null }
   ]},
   { label:'Provider /\nsecondary care', nodes:[
-    { type:'operational', title:'Provider Drug & Therapeutics Committee', sub:'Provider formulary decision', dur:'1\u20133 months',
+    { type:'operational', constraint:'affordability', title:'Provider Drug & Therapeutics Committee', sub:'Provider formulary decision', dur:'1\u20133 months',
       what:'Even after ICB approval, individual NHS providers may run their own Drug & Therapeutics Committees (DTCs) or equivalent which make independent formulary decisions.',
       barriers:['Provider DTCs are independent of ICBs. NICE approval does not bind them; the NICE mandate applies to commissioners','Providers may bear the cost of high-cost drugs under block or tariff contracts, creating a financial incentive to delay or not approve','Some providers add their own clinical or access criteria on top of NICE and ICB criteria'], tip:null, cs:null },
-    { type:'operational', title:'Service capacity and resource planning', sub:'Can the provider actually deliver the service?', dur:'3\u201312 months',
+    { type:'operational', constraint:'capacity', title:'Service capacity and resource planning', sub:'Can the provider actually deliver the service?', dur:'3\u201312 months',
       what:'A medicine being on the formulary does not mean the provider can deliver it. New medicines often require additional clinical capacity, administration time, specialist nursing, infusion suite access, or outpatient appointments that do not exist within current resource.',
       barriers:['Infusion or administration capacity may be insufficient to absorb new patients without additional investment','Specialist nursing, pharmacy, or clinical time may not be funded within existing contracts','Outpatient appointment demand may not be modelled or planned for','Tariff or block contract income may not cover the full cost of delivering the service, creating a financial disincentive even where clinical will exists'], tip:null,
-      cs:{ title:'CGRP monoclonal antibodies (erenumab, fremanezumab, galcanezumab)', body:'NICE approved CGRP monoclonal antibodies for migraine prevention from 2020 onwards. The eligible population is substantial — migraine affects around 1 in 7 people in the UK — but access has been severely constrained by neurology services that were already overwhelmed. The NHS neurology waiting list grew by 76% between April 2021 and April 2023. Despite NICE approval, only 52% of eligible sufferers are offered CGRP antibody medicines, and patients must typically fail multiple other preventive treatments before being considered. For those who are eligible, waiting lists can be months or even years. The medicines were clinically approved and cost-effective. The service infrastructure to deliver them was not there.', tag:'Provider / secondary care — operational', link:'https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal' }
+      cs:{ title:'CGRP monoclonal antibodies (erenumab, fremanezumab, galcanezumab)', body:'NICE approved CGRP monoclonal antibodies for migraine prevention from 2020 onwards. The eligible population is substantial — migraine affects around 1 in 7 people in the UK — but access has been severely constrained by neurology services that were already overwhelmed. The NHS neurology waiting list grew by 76% between April 2021 and April 2023. Despite NICE approval, only 52% of eligible sufferers are offered CGRP antibody medicines, and patients must typically fail multiple other preventive treatments before being considered. For those who are eligible, waiting lists can be months or even years. The medicines were clinically approved and cost-effective. The service infrastructure to deliver them was not there.', tag:'Provider / secondary care — capacity', link:'https://hansard.parliament.uk/Commons/2024-03-20/debates/5A973487-45C5-4C19-BF6E-0B7E059580A9/AccessToMigraineTreatment' }
     }
   ]},
   { label:'Shared care', nodes:[
-    { type:'commissioning', title:'Shared care protocol development', sub:'Provider, ICB, and primary care contractor agreement', dur:'6\u201312 months',
+    { type:'commissioning', constraint:'capacity', title:'Shared care protocol development', sub:'Provider, ICB, and primary care contractor agreement', dur:'6\u201312 months',
       what:'Where responsibility for ongoing prescribing transfers from secondary to primary care, a shared care protocol (SCP) must be developed and ratified. The SCP defines clinical responsibilities, monitoring requirements, dose titration, and escalation criteria. It must be agreed by the provider, the ICB, and primary care contractors.',
       barriers:['SCP development and ratification typically takes 6\u201312 months after NICE approval','Liability concerns mean primary care contractors frequently decline shared care for newer or complex medicines'], tip:null, cs:null },
-    { type:'informal', title:'Primary care contractor acceptance', sub:'Individual contractors must opt in', dur:'6\u201312 months',
+    { type:'informal', constraint:'confidence', title:'Primary care contractor acceptance', sub:'Individual contractors must opt in', dur:'6\u201312 months',
       what:'Even once a shared care protocol is ratified at ICB level, individual primary care contractors must agree to accept shared care responsibilities for their patients. Contractor-level refusal is common and creates unequal access within the same ICB area.',
       barriers:['No obligation on individual primary care contractors to accept shared care even when the ICB protocol is approved','Shared care is often perceived as above and beyond the primary care contractor core contract. A locally enhanced service may need to be developed, approved, funded and commissioned','Primary care contractors cite workload, indemnity risk, and lack of familiarity with the medicine as reasons to decline','Patients registered with non-accepting contractors must continue receiving prescriptions from secondary care outpatient services, creating inequity and capacity pressure','There is no consistent process for tracking which primary care contractors have accepted shared care within an ICB'], tip:null, cs:null },
-    { type:'operational', title:'Monitoring and ongoing review', sub:'Sustaining shared care in practice', dur:'Ongoing',
+    { type:'operational', constraint:'capacity', title:'Monitoring and ongoing review', sub:'Sustaining shared care in practice', dur:'Ongoing',
       what:'Once shared care is live, the primary care contractor takes on responsibility for monitoring, repeat prescribing, and recognising when to escalate back to the specialist. There is published evidence that monitoring of shared care prescribing in primary care is inconsistent and incomplete.',
       barriers:['Recall mechanisms in primary care can be variable','Monitoring requirements that are burdensome or poorly resourced in primary care lead to incomplete or inadequate monitoring','Patients may not attend monitoring appointments, leaving primary care contractors in an ambiguous liability position'], tip:null, cs:null }
   ]},
   { label:'Primary care', nodes:[
-    { type:'commissioning', title:'Primary care formulary and green listing', sub:'ICB green status enables primary care prescribing', dur:'1\u20133 months',
+    { type:'commissioning', constraint:'capacity', title:'Primary care formulary and green listing', sub:'ICB green status enables primary care prescribing', dur:'1\u20133 months',
       what:'For medicines classified as green on the ICB formulary, primary care contractors can prescribe independently without shared care or specialist involvement.',
       barriers:['Green listing by the ICB does not guarantee the medicine appears on primary care clinical system formularies or prescribing decision support tools','Clinical system suppliers (EMIS, SystmOne) may not have updated drug records, dosing guidance, or interaction flags for newer medicines','Primary care contractors may be unaware the medicine is green-listed and continue to refer unnecessarily to secondary care'], tip:null,
-      cs:{ title:'Inclisiran (Leqvio)', body:'Inclisiran is a twice-yearly injectable cholesterol-lowering treatment, NICE-approved in October 2021 and specifically designed for primary care delivery. NHS England set a target of 300,000 patients receiving it by 2024. By October 2024, fewer than 20,000 people had been prescribed it — roughly 7% of the intended target population. The barriers were not formulary or funding — NHS England centrally funded the medicine to remove cost as an obstacle. Primary care contractors were unfamiliar with administering injectables in routine appointments, the twice-yearly schedule did not map onto existing chronic disease review structures, and the RCGP and BMA had publicly urged caution about prescribing. The situation was compounded by GP collective action, which was in force at the point when uptake needed to accelerate, making practices reluctant to take on new clinical responsibilities.', tag:'Primary care — commissioning / funding', link:'https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal' }
+      cs:{ title:'Inclisiran (Leqvio)', body:'Inclisiran is a twice-yearly injectable cholesterol-lowering treatment, NICE-approved in October 2021 and specifically designed for primary care delivery. NHS England set a target of 300,000 patients receiving it by 2024. By October 2024, fewer than 20,000 people had been prescribed it — roughly 7% of the intended target population. The barriers were not formulary or funding — NHS England centrally funded the medicine to remove cost as an obstacle. Primary care contractors were unfamiliar with administering injectables in routine appointments, the twice-yearly schedule did not map onto existing chronic disease review structures, and the RCGP and BMA had publicly urged caution about prescribing. The situation was compounded by GP collective action, which was in force at the point when uptake needed to accelerate, making practices reluctant to take on new clinical responsibilities.', tag:'Primary care — capacity', link:'https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal' }
     },
-    { type:'informal', title:'Primary care prescribing awareness and confidence', sub:'Will the primary care contractor actually prescribe?', dur:'6\u201324 months',
+    { type:'informal', constraint:'confidence', title:'Primary care prescribing awareness and confidence', sub:'Will the primary care contractor actually prescribe?', dur:'6\u201324 months',
       what:'Even where a medicine is green-listed and technically prescribable in primary care, prescribing rates depend heavily on awareness, clinical confidence, familiarity with the patient population, and perceived risk.',
       barriers:['Primary care contractors may be unfamiliar with the condition or indication, particularly for medicines traditionally managed in secondary care','Concern about side effect management, monitoring responsibilities, or patient complexity leads to unnecessary referral or non-prescribing','Prescribing incentive schemes can drive or suppress prescribing depending on how they are designed'], tip:null, cs:null }
   ]},
   { label:'Clinical /\nprescribing', nodes:[
-    { type:'clinical', title:'Specialist clinical eligibility', sub:'Patient meets criteria for treatment', dur:'1\u20133 months',
+    { type:'clinical', constraint:'confidence', title:'Specialist clinical eligibility', sub:'Patient meets criteria for treatment', dur:'1\u20133 months',
       what:'The specialist clinician determines whether the individual patient meets the clinical eligibility criteria set by NICE and/or the local formulary. Criteria may include prior treatment failure, biomarker status, functional scores, or disease staging.',
       barriers:['Local criteria may be more restrictive than the NICE population without formal justification','Diagnostic tests required to confirm eligibility may not be routinely commissioned or funded','Eligibility criteria can be applied inconsistently between clinicians and between providers','NICE criteria may use surrogate measures not routinely collected in clinical practice'], tip:null,
-      cs:{ title:'CGRP monoclonal antibodies — eligibility gatekeeping', body:'Despite NICE approval, access to CGRP monoclonal antibodies requires patients to have failed at least three preventive treatments under clinical supervision — a process that can take months or years before a patient even becomes eligible to be assessed. The Migraine Trust reports that patients regularly face difficulty obtaining a referral at all, and waiting times of many months or longer once referred. NICE approval created a defined eligible population; the local eligibility criteria and specialist assessment requirements made reaching that population significantly harder than the NICE guidance implied.', tag:'Clinical / prescribing — eligibility', link:'https://migrainetrust.org/live-with-migraine/healthcare/treatments/calcitonin-gene-related-peptide-monoclonal-antibodies/' }
+      cs:{ title:'CGRP monoclonal antibodies — eligibility gatekeeping', body:'Despite NICE approval, access to CGRP monoclonal antibodies requires patients to have failed at least three preventive treatments under clinical supervision — a process that can take months or years before a patient even becomes eligible to be assessed. The Migraine Trust reports that patients regularly face difficulty obtaining a referral at all, and waiting times of many months or longer once referred. NICE approval created a defined eligible population; the local eligibility criteria and specialist assessment requirements made reaching that population significantly harder than the NICE guidance implied.', tag:'Clinical / prescribing — confidence', link:'https://migrainetrust.org/live-with-migraine/healthcare/treatments/calcitonin-gene-related-peptide-monoclonal-antibodies/' }
     },
-    { type:'clinical', title:'Prior approval or exceptionality', sub:'If required by local formulary', dur:'1\u20133 months',
+    { type:'clinical', constraint:'affordability', title:'Prior approval or exceptionality', sub:'If required by local formulary', dur:'1\u20133 months',
       what:'Some ICB formularies require clinicians to submit a prior approval request for each patient, even where the medicine is NICE-approved. This creates significant administrative burden and delay.',
       barriers:['Prior approval processes are primarily designed for medicines without NICE approval. Their application to TA-approved medicines is uncommon but not unheard of','Clinicians may not refer patients rather than complete burdensome paperwork','Approval turnaround can take weeks, delaying treatment'], tip:null, cs:null },
-    { type:'informal', title:'Clinician awareness and confidence', sub:'Does the prescriber know and trust the medicine?', dur:'6\u201318 months',
+    { type:'informal', constraint:'confidence', title:'Clinician awareness and confidence', sub:'Does the prescriber know and trust the medicine?', dur:'6\u201318 months',
       what:'Even where all formal barriers are cleared, prescribing rates depend on whether clinicians are aware of the medicine, understand the evidence, feel confident in the indication, and see the medicine as part of their clinical routine.',
       barriers:['Clinicians may be unaware a NICE TA has been published','Habit and inertia favour existing treatments','Concerns about side effects or monitoring requirements reduce prescribing confidence. Where new side effects emerge clinician confidence can be profoundly impaired','One enthusiastic early adopter can account for a disproportionate share of early prescribing'], tip:null, cs:null }
   ]},
   { label:'Patient /\naccess', nodes:[
-    { type:'informal', title:'Patient awareness and referral', sub:'Does the patient know to ask?', dur:'Variable',
+    { type:'informal', constraint:'confidence', title:'Patient awareness and referral', sub:'Does the patient know to ask?', dur:'Variable',
       what:'Patients may not know a new treatment exists, may not be referred to the right specialist, or may not be empowered to ask about alternatives. This is particularly significant in conditions where patients are older, less health-literate, or socially disadvantaged.',
       barriers:['Patient information does not automatically accompany NICE approvals','Primary care contractors may be unaware of new treatments and not refer','Patients from deprived populations are less likely to self-advocate','Language, literacy, and digital access barriers compound awareness gaps'], tip:null,
-      cs:{ title:'Palforzia (peanut oral immunotherapy)', body:'NICE approved Palforzia for peanut allergy desensitisation in children in February 2022. The BSACI\'s own consensus guidance acknowledged that demand for peanut immunotherapy outstrips current NHS capacity, with 58% of UK paediatric allergy centres unable to offer the service. At the point of NICE approval, only two NHS centres were providing Palforzia to patients. In early 2026, the manufacturer Stallergenes Greer confirmed it was discontinuing Palforzia worldwide — hospitals were advised not to start new patients after April 2026, leaving patients already on waiting lists with no alternative licensed treatment. A medicine that arrived ahead of the service infrastructure needed to deliver it was then discontinued before that infrastructure could be built.', tag:'Patient / access — service capacity', link:'https://www.anaphylaxis.org.uk/palforzia-peanut-oral-immunotherapy-update/' }
+      cs:{ title:'Palforzia (peanut oral immunotherapy)', body:'NICE approved Palforzia for peanut allergy desensitisation in children in February 2022. The BSACI\'s own consensus guidance acknowledged that demand for peanut immunotherapy outstrips current NHS capacity, with 58% of UK paediatric allergy centres unable to offer the service. At the point of NICE approval, only two NHS centres were providing Palforzia to patients. In early 2026, the manufacturer Stallergenes Greer confirmed it was discontinuing Palforzia worldwide — hospitals were advised not to start new patients after April 2026, leaving patients already on waiting lists with no alternative licensed treatment. A medicine that arrived ahead of the service infrastructure needed to deliver it was then discontinued before that infrastructure could be built.', tag:'Patient / access — capacity', link:'https://www.anaphylaxis.org.uk/palforzia-peanut-oral-immunotherapy-update/' }
     },
-    { type:'clinical', title:'Consent, monitoring and adherence', sub:'Ongoing access is not automatic', dur:'Ongoing',
+    { type:'clinical', constraint:'capacity', title:'Consent, monitoring and adherence', sub:'Ongoing access is not automatic', dur:'Ongoing',
       what:'Once a patient is prescribed, ongoing access depends on successful consent, required monitoring tests, tolerability, and adherence. For many medicines these are complex, ongoing requirements.',
       barriers:['Monitoring requirements may not be resourced in the prescribing setting','Patient adherence may be lower than in trial conditions','Some medicines require dispensing in a specific setting. Travel burden affects adherence','Discontinuation criteria may result in patients losing access even when they wish to continue'], tip:null,
       cs:{ title:'Kaftrio (elexacaftor/tezacaftor/ivacaftor)', body:'Kaftrio represented a transformative advance for people with cystic fibrosis, effective in around 90% of patients. NICE could not recommend it at list price — the cost per QALY was far above the standard threshold — and negotiations between NHS England and Vertex Pharmaceuticals were protracted. A landmark deal was reached in June 2020, making more than 7,000 people in England eligible. However, in November 2023, NICE\'s draft guidance concluded that Kaftrio remained too expensive for a permanent recommendation, triggering a further round of negotiations before permanent access was finally confirmed in June 2024 — four years after the initial deal. The case prompted lasting debate about NICE methodology, the valuation of transformative medicines for small populations, and whether the standard cost-effectiveness framework is fit for purpose in these circumstances.', tag:'NICE approval — commercial negotiation', link:'https://www.cysticfibrosis.org.uk/news/nice-approve-permanent-access-to-life-changing-cystic-fibrosis-drugs' }
     }
   ]}
 ];
+
 var active = {};
 lanes.forEach(function(l){ active[l.key] = true; });
+
 function clockSvg(col) {
   return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
 }
 function bookSvg() {
   return '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#DCE7E3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
 }
+
+function anyConstraintActive() {
+  return activeConstraints.affordability || activeConstraints.capacity || activeConstraints.confidence;
+}
+
+function applyConstraintFilter() {
+  document.querySelectorAll('.node[data-constraint]').forEach(function(el) {
+    var c = el.dataset.constraint;
+    if (!anyConstraintActive() || activeConstraints[c]) {
+      el.classList.remove('constraint-dim');
+    } else {
+      el.classList.add('constraint-dim');
+    }
+  });
+}
+
 function buildToggles() {
   var cont = document.getElementById('toggles');
   lanes.forEach(function(l) {
@@ -214,7 +267,24 @@ function buildToggles() {
     };
     cont.appendChild(b);
   });
+
+  var ctCont = document.getElementById('constraint-toggles');
+  Object.keys(constraints).forEach(function(key) {
+    var c = constraints[key];
+    var b = document.createElement('button');
+    b.className = 'constraint-tog inactive';
+    b.textContent = c.label;
+    b.style.cssText = 'background:'+c.bg+';color:'+c.text+';border-color:'+c.border+';';
+    b.onclick = function() {
+      activeConstraints[key] = !activeConstraints[key];
+      b.classList.toggle('active', activeConstraints[key]);
+      b.classList.toggle('inactive', !activeConstraints[key]);
+      applyConstraintFilter();
+    };
+    ctCont.appendChild(b);
+  });
 }
+
 function buildGrid() {
   var grid = document.getElementById('grid');
   grid.style.gridTemplateColumns = '110px ' + lanes.map(function(){ return '1fr'; }).join(' ');
@@ -246,11 +316,17 @@ function buildGrid() {
       matching.forEach(function(node) {
         var n = document.createElement('div');
         n.className = 'node';
+        n.dataset.constraint = node.constraint;
         n.style.background = lane.bg;
         n.style.borderColor = lane.border;
-        var durHtml = node.dur ? '<div class="node-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></div>' : '';
-        var csHtml = node.cs ? '<div class="node-cs-badge">'+bookSvg()+'Case study</div>' : '';
-        n.innerHTML = '<div class="node-title" style="color:'+lane.tc+'">'+node.title+'</div><div class="node-sub" style="color:'+lane.sc+'">'+node.sub+'</div>'+durHtml+csHtml;
+        var con = constraints[node.constraint];
+        var conBadge = '<span class="constraint-badge" style="background:'+con.bg+';color:'+con.text+';border:1px solid '+con.border+'">'+con.label+'</span>';
+        var durBadge = node.dur ? '<span class="node-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></span>' : '';
+        var csBadge = node.cs ? '<span class="node-cs-badge">'+bookSvg()+' Case study</span>' : '';
+        n.innerHTML =
+          '<div class="node-title" style="color:'+lane.tc+'">'+node.title+'</div>'+
+          '<div class="node-sub" style="color:'+lane.sc+'">'+node.sub+'</div>'+
+          '<div class="node-badges">'+conBadge+durBadge+csBadge+'</div>';
         n.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
         cell.appendChild(n);
       });
@@ -264,8 +340,10 @@ function buildGrid() {
     });
   });
 }
+
 function openPanel(node, stageLabel, lane) {
   var c = document.getElementById('panel-content');
+  var con = constraints[node.constraint];
   var durHtml = node.dur ? '<div class="panel-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></div>' : '';
   var barriersHtml = node.barriers.map(function(b){ return '<li>'+b+'</li>'; }).join('');
   var tipHtml = node.tip ? '<h3>Insight</h3><div class="insight">'+node.tip+'</div>' : '';
@@ -275,6 +353,7 @@ function openPanel(node, stageLabel, lane) {
   }
   c.innerHTML =
     '<div class="panel-type" style="background:'+lane.togBg+';color:'+lane.togText+'">'+typeLabels[node.type]+'</div>'+
+    '<span class="panel-constraint" style="background:'+con.bg+';color:'+con.text+';border:1px solid '+con.border+'">'+con.label+'</span>'+
     '<h2>'+node.title+'</h2>'+
     '<div class="panel-stage">'+stageLabel+'</div>'+
     durHtml+
@@ -284,10 +363,12 @@ function openPanel(node, stageLabel, lane) {
   document.getElementById('panel').classList.add('open');
   document.getElementById('overlay').classList.add('open');
 }
+
 function closePanel() {
   document.getElementById('panel').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
 }
+
 buildToggles();
 buildGrid();
 </script>
