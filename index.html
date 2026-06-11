@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>From NICE approval to patient access | The Prescription</title>
+<title>Approval to Access: The 90 Day Myth | The Prescription</title>
 <style>
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-height: 100vh; }
@@ -15,7 +15,7 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .brand-tag { font-size: 11px; color: #6F6F6F; font-style: italic; margin-top: 2px; }
 .page-title { font-size: 22px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
 .page-sub { font-size: 13px; color: #6F6F6F; margin-bottom: 1.25rem; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.5; }
-.scope { font-size: 12px; padding: 10px 14px; background: #DCE7E3; border-left: 3px solid #2F6B5F; border-radius: 0 6px 6px 0; margin-bottom: 1.5rem; color: #1E1E1E; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.55; }
+.scope { font-size: 12px; padding: 10px 14px; background: #DCE7E3; border-left: 3px solid #2F6B5F; border-radius: 0 6px 6px 0; margin-bottom: 1rem; color: #1E1E1E; font-family: 'Helvetica Neue', Arial, sans-serif; line-height: 1.55; }
 .scope strong { font-weight: 600; }
 .concurrent-note { font-size: 11px; padding: 8px 12px; background: #F6F5F2; border: 1px solid #DCE7E3; border-radius: 6px; margin-bottom: 1.5rem; color: #6F6F6F; font-family: 'Helvetica Neue', Arial, sans-serif; font-style: italic; }
 .toggles { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
@@ -31,13 +31,14 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .stage-pill { font-size: 10px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; padding: 3px 8px; border-radius: 20px; background: #DCE7E3; color: #1C4A3F; white-space: nowrap; }
 .lane-cell { padding: 8px 4px; border-bottom: 1px solid #DCE7E3; border-left: 1px solid #DCE7E3; display: flex; flex-direction: column; gap: 5px; min-height: 60px; transition: opacity 0.2s; }
 .lane-cell.hidden { opacity: 0; pointer-events: none; }
-.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.node { border-radius: 6px; padding: 8px 10px; font-size: 11px; cursor: pointer; border: 1px solid transparent; transition: transform 0.1s, box-shadow 0.1s; font-family: 'Helvetica Neue', Arial, sans-serif; position: relative; }
 .node:hover { transform: translateY(-1px); box-shadow: 0 2px 8px rgba(47,107,95,0.15); }
 .node-title { font-weight: 600; font-size: 11px; margin-bottom: 2px; line-height: 1.3; }
 .node-sub { font-size: 10px; line-height: 1.3; margin-bottom: 4px; }
 .node-dur { display: flex; align-items: center; gap: 4px; margin-top: 2px; }
 .node-dur svg { flex-shrink: 0; }
 .node-dur span { font-size: 10px; font-weight: 600; }
+.node-cs-badge { display: inline-flex; align-items: center; gap: 3px; margin-top: 5px; font-size: 9px; font-weight: 600; padding: 2px 6px; border-radius: 8px; background: #1C4A3F; color: #DCE7E3; }
 .node-excl { opacity: 0.45; border-radius: 6px; padding: 8px 10px; font-size: 11px; font-family: 'Helvetica Neue', Arial, sans-serif; border: 1px dashed #6F6F6F55; }
 .node-excl .node-title { text-decoration: line-through; font-weight: 600; }
 .node-excl .node-sub { font-size: 10px; }
@@ -58,6 +59,13 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
 .panel ul { padding-left: 14px; }
 .panel li { font-size: 11px; line-height: 1.6; margin-bottom: 4px; font-family: 'Helvetica Neue', Arial, sans-serif; color: #1E1E1E; }
 .insight { padding: 10px 12px; background: #DCE7E3; border-left: 3px solid #2F6B5F; border-radius: 0 5px 5px 0; font-size: 11px; line-height: 1.6; font-family: 'Helvetica Neue', Arial, sans-serif; margin-top: 4px; color: #1E1E1E; }
+.panel-divider { border: none; border-top: 1px solid #DCE7E3; margin: 16px 0; }
+.case-card { background: #1C4A3F; border-radius: 6px; padding: 12px 14px; margin-top: 4px; }
+.case-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #9ECFC4; margin-bottom: 6px; display: flex; align-items: center; gap: 5px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.case-title { font-size: 12px; font-weight: 700; color: #F6F5F2; margin-bottom: 6px; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.case-body { font-size: 11px; line-height: 1.6; color: #C8DED9; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.case-tag { display: inline-block; font-size: 9px; padding: 2px 7px; border-radius: 10px; background: #2F6B5F; color: #DCE7E3; margin-top: 8px; font-weight: 600; font-family: 'Helvetica Neue', Arial, sans-serif; }
+.case-link { display: inline-block; font-size: 10px; color: #9ECFC4; margin-top: 8px; margin-left: 8px; font-family: 'Helvetica Neue', Arial, sans-serif; text-decoration: underline; cursor: pointer; }
 .footer { margin-top: 2.5rem; padding-top: 1rem; border-top: 1px solid #DCE7E3; display: flex; align-items: center; gap: 8px; }
 .footer-bar { width: 3px; height: 24px; background: #2F6B5F; border-radius: 2px; }
 .footer-txt { font-size: 11px; color: #6F6F6F; font-style: italic; font-family: Georgia, serif; }
@@ -73,7 +81,7 @@ body { font-family: Georgia, serif; background: #F6F5F2; color: #1E1E1E; min-hei
       <div class="brand-tag">for clarity in complexity</div>
     </div>
   </div>
-  <div class="page-title">From NICE approval to patient access</div>
+  <div class="page-title">Approval to Access: The 90 Day Myth</div>
   <div class="page-sub">Every gate a medicine must pass after a positive NICE technology appraisal. Click any node for detail.</div>
   <div class="scope"><strong>Scope:</strong> This flow covers medicines commissioned by ICBs following routine NICE technology appraisal. <strong>Specialised commissioning (NHS England direct) is out of scope</strong> — that pathway diverges at NICE publication and follows a separate route toward implementation.</div>
   <div class="concurrent-note">Note: many of these steps run concurrently rather than sequentially. Duration estimates reflect typical elapsed time for each step in isolation.</div>
@@ -105,82 +113,92 @@ var lanes = [
   { key:'clinical',      label:'Clinical / prescribing', bg:'#EBF0E5', border:'#5C6B4744', tc:'#3A4A2A', sc:'#5C6B47', togBg:'#D8E5CC', togText:'#3A4A2A', togBorder:'#5C6B47', hBg:'#D8E5CC', hText:'#3A4A2A' },
   { key:'informal',      label:'Informal / cultural',    bg:'#EEE8EC', border:'#7A5C6E44', tc:'#4A3040', sc:'#7A5C6E', togBg:'#E2D4DC', togText:'#4A3040', togBorder:'#7A5C6E', hBg:'#E2D4DC', hText:'#4A3040' }
 ];
-
 var typeLabels = { formal:'Formal / regulatory', commissioning:'Commissioning / funding', operational:'Operational / supply', clinical:'Clinical / prescribing', informal:'Informal / cultural' };
-
 var stages = [
   { label:'NICE approval', nodes:[
     { type:'formal', title:'NICE technology appraisal', sub:'Positive recommendation issued', dur:null,
       what:'NICE issues a positive technology appraisal (TA) recommendation. This triggers a legal obligation for the NHS in England to fund the medicine, typically within 90 days of the final guidance date.',
-      barriers:['Mandatory funding direction applies to routine commissioning TAs only — not NICE guidelines, pathways, or evidence reviews','Conditional approval with managed access creates ongoing uncertainty about long-term routine commissioning','Some TAs are approved only for a sub-population narrower than the licensed indication'], tip:null },
+      barriers:['Mandatory funding direction applies to routine commissioning TAs only — not NICE guidelines, pathways, or evidence reviews','Conditional approval with managed access creates ongoing uncertainty about long-term routine commissioning','Some TAs are approved only for a sub-population narrower than the licensed indication'], tip:null, cs:null },
     { type:'excluded', title:'Specialised commissioning', sub:'NHS England direct — out of scope', badge:'Out of scope' }
   ]},
   { label:'ICB / system', nodes:[
     { type:'commissioning', title:'ICB medicines decision making committee review', sub:'Area Prescribing Committee or equivalent', dur:'2\u20136 months',
       what:'The ICB Area Prescribing Committee (APC) or equivalent reviews the medicine. Despite NICE approval, many APCs run their own review process, causing months of additional delay.',
-      barriers:['NICE TA does not attract additional ring-fenced funding to system level','Many APCs apply additional local economic modelling or budget impact analysis despite NICE approval','Committee meeting dates are not aligned to NICE TA publication, so an appraisal may not go to committee until approx 45 days post-publication','Committees may have a sub-structure which further delays consideration, or the APC may not have adequate budget delegation to approve, requiring escalation and further delays'], tip:null },
+      barriers:['NICE TA does not attract additional ring-fenced funding to system level','Many APCs apply additional local economic modelling or budget impact analysis despite NICE approval','Committee meeting dates are not aligned to NICE TA publication, so an appraisal may not go to committee until approx 45 days post-publication','Committees may have a sub-structure which further delays consideration, or the APC may not have adequate budget delegation to approve, requiring escalation and further delays'], tip:null, cs:null },
     { type:'commissioning', title:'System budget impact assessment', sub:'Local prevalence and cost modelling', dur:'1\u201312 months',
       what:'The ICB assesses the local budget impact based on estimated prevalent and incident population, treatment duration, and gross cost, often without visibility of any commercial discount agreed between NHSE and the manufacturer.',
-      barriers:['ICBs work from list price. The real net cost after commercial discount may be substantially lower','NICE estimates are based on clinical trial rather than real-world data','Affordability is not a legitimate reason to withhold a NICE-approved medicine, but in practice, approval for additional in-year investment in a medicine not considered in planning and budget setting is challenging — some medicines may be delayed, officially or unofficially, until the new financial year'], tip:null },
+      barriers:['ICBs work from list price. The real net cost after commercial discount may be substantially lower','NICE estimates are based on clinical trial rather than real-world data','Affordability is not a legitimate reason to withhold a NICE-approved medicine, but in practice, approval for additional in-year investment in a medicine not considered in planning and budget setting is challenging. Some medicines may be delayed, officially or unofficially, until the new financial year'], tip:null,
+      cs:{ title:'GLP-1 receptor agonists (semaglutide, tirzepatide)', body:'NICE approved semaglutide for obesity in 2023, with an eligible population estimated at 3.4 million people in England. NHS England invoked a funding variation, phasing access over three years and initially limiting treatment to specialist weight management services. The result was a vast gap between eligible patients and those receiving NHS treatment — NHS prescriptions currently account for less than 10% of the estimated 2.4 million people in the UK accessing these medicines. Access has not simply shifted to those who can afford private treatment. Many patients have changed their treatment habits due to cost, with some turning to unverified sources. In 2025, the MHRA seized approximately 20 million doses of illegal weight loss medicines with an estimated street value of £45 million, and at least one confirmed death has been linked to counterfeit product. The funding variation mechanism protected NHS finances but contributed to a patient safety crisis in the unregulated market it helped create.', tag:'ICB / system — commissioning / funding', link:'https://www.england.nhs.uk/ourwork/prevention/obesity/medicines-for-obesity/weight-management-injections/' }
+    },
     { type:'commissioning', title:'Prescribing pathway / RAG classification', sub:'Traffic light or formulary status', dur:'3\u20136 months',
       what:'The ICB assigns a RAG (red/amber/green) or equivalent classification determining who can prescribe, in what setting, and whether prior approval is needed.',
-      barriers:['NICE approval does not usually dictate the appropriate setting for prescribing. Where it does, this can be problematic as NICE criteria do not necessarily align to local clinical pathways and commissioned services','Criteria for prior approval locally implemented can be more restrictive than the NICE population','This can drive inconsistency between formularies'], tip:null }
+      barriers:['NICE approval does not usually dictate the appropriate setting for prescribing. Where it does, this can be problematic as NICE criteria do not necessarily align to local clinical pathways and commissioned services','Criteria for prior approval locally implemented can be more restrictive than the NICE population','This can drive inconsistency between formularies'], tip:null, cs:null }
   ]},
   { label:'Provider /\nsecondary care', nodes:[
     { type:'operational', title:'Provider Drug & Therapeutics Committee', sub:'Provider formulary decision', dur:'1\u20133 months',
       what:'Even after ICB approval, individual NHS providers may run their own Drug & Therapeutics Committees (DTCs) or equivalent which make independent formulary decisions.',
-      barriers:['Provider DTCs are independent of ICBs. NICE approval does not bind them; the NICE mandate applies to commissioners','Providers may bear the cost of high-cost drugs under block or tariff contracts, creating a financial incentive to delay or not approve','Some providers add their own clinical or access criteria on top of NICE and ICB criteria'], tip:null },
+      barriers:['Provider DTCs are independent of ICBs. NICE approval does not bind them; the NICE mandate applies to commissioners','Providers may bear the cost of high-cost drugs under block or tariff contracts, creating a financial incentive to delay or not approve','Some providers add their own clinical or access criteria on top of NICE and ICB criteria'], tip:null, cs:null },
     { type:'operational', title:'Service capacity and resource planning', sub:'Can the provider actually deliver the service?', dur:'3\u201312 months',
-      what:'A medicine being on the formulary does not mean the provider can deliver it. New medicines often require additional clinical capacity, administration time, specialist nursing, infusion suite access, or outpatient appointments that do not exist within current resource. Providers must assess whether the service model is deliverable before committing to prescribing.',
-      barriers:['Infusion or administration capacity may be insufficient to absorb new patients without additional investment','Specialist nursing, pharmacy, or clinical time may not be funded within existing contracts','Outpatient appointment demand may not be modelled or planned for','Tariff or block contract income may not cover the full cost of delivering the service, creating a financial disincentive even where clinical will exists'], tip:null }
+      what:'A medicine being on the formulary does not mean the provider can deliver it. New medicines often require additional clinical capacity, administration time, specialist nursing, infusion suite access, or outpatient appointments that do not exist within current resource.',
+      barriers:['Infusion or administration capacity may be insufficient to absorb new patients without additional investment','Specialist nursing, pharmacy, or clinical time may not be funded within existing contracts','Outpatient appointment demand may not be modelled or planned for','Tariff or block contract income may not cover the full cost of delivering the service, creating a financial disincentive even where clinical will exists'], tip:null,
+      cs:{ title:'CGRP monoclonal antibodies (erenumab, fremanezumab, galcanezumab)', body:'NICE approved CGRP monoclonal antibodies for migraine prevention from 2020 onwards. The eligible population is substantial — migraine affects around 1 in 7 people in the UK — but access has been severely constrained by neurology services that were already overwhelmed. The NHS neurology waiting list grew by 76% between April 2021 and April 2023. Despite NICE approval, only 52% of eligible sufferers are offered CGRP antibody medicines, and patients must typically fail multiple other preventive treatments before being considered. For those who are eligible, waiting lists can be months or even years. The medicines were clinically approved and cost-effective. The service infrastructure to deliver them was not there.', tag:'Provider / secondary care — operational', link:'https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal' }
+    }
   ]},
   { label:'Shared care', nodes:[
     { type:'commissioning', title:'Shared care protocol development', sub:'Provider, ICB, and primary care contractor agreement', dur:'6\u201312 months',
       what:'Where responsibility for ongoing prescribing transfers from secondary to primary care, a shared care protocol (SCP) must be developed and ratified. The SCP defines clinical responsibilities, monitoring requirements, dose titration, and escalation criteria. It must be agreed by the provider, the ICB, and primary care contractors.',
-      barriers:['SCP development and ratification typically takes 6\u201312 months after NICE approval','Liability concerns mean primary care contractors frequently decline shared care for newer or complex medicines'], tip:null },
+      barriers:['SCP development and ratification typically takes 6\u201312 months after NICE approval','Liability concerns mean primary care contractors frequently decline shared care for newer or complex medicines'], tip:null, cs:null },
     { type:'informal', title:'Primary care contractor acceptance', sub:'Individual contractors must opt in', dur:'6\u201312 months',
       what:'Even once a shared care protocol is ratified at ICB level, individual primary care contractors must agree to accept shared care responsibilities for their patients. Contractor-level refusal is common and creates unequal access within the same ICB area.',
-      barriers:['No obligation on individual primary care contractors to accept shared care even when the ICB protocol is approved','Shared care is often perceived as above and beyond the primary care contractor core contract. A locally enhanced service may need to be developed, approved, funded and commissioned','Primary care contractors cite workload, indemnity risk, and lack of familiarity with the medicine as reasons to decline','Patients registered with non-accepting contractors must continue receiving prescriptions from secondary care outpatient services, creating inequity and capacity pressure','There is no consistent process for tracking which primary care contractors have accepted shared care within an ICB'], tip:null },
+      barriers:['No obligation on individual primary care contractors to accept shared care even when the ICB protocol is approved','Shared care is often perceived as above and beyond the primary care contractor core contract. A locally enhanced service may need to be developed, approved, funded and commissioned','Primary care contractors cite workload, indemnity risk, and lack of familiarity with the medicine as reasons to decline','Patients registered with non-accepting contractors must continue receiving prescriptions from secondary care outpatient services, creating inequity and capacity pressure','There is no consistent process for tracking which primary care contractors have accepted shared care within an ICB'], tip:null, cs:null },
     { type:'operational', title:'Monitoring and ongoing review', sub:'Sustaining shared care in practice', dur:'Ongoing',
-      what:'Once shared care is live, the primary care contractor takes on responsibility for monitoring, repeat prescribing, and recognising when to escalate back to the specialist. The practical burden of monitoring including blood tests, clinical review and dose adjustment determines whether shared care is sustainable in primary care. There is also published evidence that suggests monitoring of shared care prescribing in primary care is inconsistent and incomplete.',
-      barriers:['Recall mechanisms in primary care can be variable','Monitoring requirements that are burdensome or poorly resourced in primary care lead to incomplete or inadequate monitoring','Patients may not attend monitoring appointments, leaving primary care contractors in an ambiguous liability position'], tip:null }
+      what:'Once shared care is live, the primary care contractor takes on responsibility for monitoring, repeat prescribing, and recognising when to escalate back to the specialist. There is published evidence that monitoring of shared care prescribing in primary care is inconsistent and incomplete.',
+      barriers:['Recall mechanisms in primary care can be variable','Monitoring requirements that are burdensome or poorly resourced in primary care lead to incomplete or inadequate monitoring','Patients may not attend monitoring appointments, leaving primary care contractors in an ambiguous liability position'], tip:null, cs:null }
   ]},
   { label:'Primary care', nodes:[
     { type:'commissioning', title:'Primary care formulary and green listing', sub:'ICB green status enables primary care prescribing', dur:'1\u20133 months',
       what:'For medicines classified as green on the ICB formulary, primary care contractors can prescribe independently without shared care or specialist involvement.',
-      barriers:['Green listing by the ICB does not guarantee the medicine appears on primary care clinical system formularies or prescribing decision support tools','Clinical system suppliers (EMIS, SystmOne) may not have updated drug records, dosing guidance, or interaction flags for newer medicines','Primary care contractors may be unaware the medicine is green-listed and continue to refer unnecessarily to secondary care'], tip:null },
+      barriers:['Green listing by the ICB does not guarantee the medicine appears on primary care clinical system formularies or prescribing decision support tools','Clinical system suppliers (EMIS, SystmOne) may not have updated drug records, dosing guidance, or interaction flags for newer medicines','Primary care contractors may be unaware the medicine is green-listed and continue to refer unnecessarily to secondary care'], tip:null,
+      cs:{ title:'Inclisiran (Leqvio)', body:'Inclisiran is a twice-yearly injectable cholesterol-lowering treatment, NICE-approved in October 2021 and specifically designed for primary care delivery. NHS England set a target of 300,000 patients receiving it by 2024. By October 2024, fewer than 20,000 people had been prescribed it — roughly 7% of the intended target population. The barriers were not formulary or funding — NHS England centrally funded the medicine to remove cost as an obstacle. Primary care contractors were unfamiliar with administering injectables in routine appointments, the twice-yearly schedule did not map onto existing chronic disease review structures, and the RCGP and BMA had publicly urged caution about prescribing. The situation was compounded by GP collective action, which was in force at the point when uptake needed to accelerate, making practices reluctant to take on new clinical responsibilities.', tag:'Primary care — commissioning / funding', link:'https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal' }
+    },
     { type:'informal', title:'Primary care prescribing awareness and confidence', sub:'Will the primary care contractor actually prescribe?', dur:'6\u201324 months',
       what:'Even where a medicine is green-listed and technically prescribable in primary care, prescribing rates depend heavily on awareness, clinical confidence, familiarity with the patient population, and perceived risk.',
-      barriers:['Primary care contractors may be unfamiliar with the condition or indication, particularly for medicines traditionally managed in secondary care','Concern about side effect management, monitoring responsibilities, or patient complexity leads to unnecessary referral or non-prescribing','Prescribing incentive schemes can drive or suppress prescribing depending on how they are designed'], tip:null }
+      barriers:['Primary care contractors may be unfamiliar with the condition or indication, particularly for medicines traditionally managed in secondary care','Concern about side effect management, monitoring responsibilities, or patient complexity leads to unnecessary referral or non-prescribing','Prescribing incentive schemes can drive or suppress prescribing depending on how they are designed'], tip:null, cs:null }
   ]},
   { label:'Clinical /\nprescribing', nodes:[
     { type:'clinical', title:'Specialist clinical eligibility', sub:'Patient meets criteria for treatment', dur:'1\u20133 months',
       what:'The specialist clinician determines whether the individual patient meets the clinical eligibility criteria set by NICE and/or the local formulary. Criteria may include prior treatment failure, biomarker status, functional scores, or disease staging.',
-      barriers:['Local criteria may be more restrictive than the NICE population without formal justification','Diagnostic tests required to confirm eligibility may not be routinely commissioned or funded','Eligibility criteria can be applied inconsistently between clinicians and between providers','NICE criteria may use surrogate measures not routinely collected in clinical practice'], tip:null },
+      barriers:['Local criteria may be more restrictive than the NICE population without formal justification','Diagnostic tests required to confirm eligibility may not be routinely commissioned or funded','Eligibility criteria can be applied inconsistently between clinicians and between providers','NICE criteria may use surrogate measures not routinely collected in clinical practice'], tip:null,
+      cs:{ title:'CGRP monoclonal antibodies — eligibility gatekeeping', body:'Despite NICE approval, access to CGRP monoclonal antibodies requires patients to have failed at least three preventive treatments under clinical supervision — a process that can take months or years before a patient even becomes eligible to be assessed. The Migraine Trust reports that patients regularly face difficulty obtaining a referral at all, and waiting times of many months or longer once referred. NICE approval created a defined eligible population; the local eligibility criteria and specialist assessment requirements made reaching that population significantly harder than the NICE guidance implied.', tag:'Clinical / prescribing — eligibility', link:'https://migrainetrust.org/live-with-migraine/healthcare/treatments/calcitonin-gene-related-peptide-monoclonal-antibodies/' }
+    },
     { type:'clinical', title:'Prior approval or exceptionality', sub:'If required by local formulary', dur:'1\u20133 months',
       what:'Some ICB formularies require clinicians to submit a prior approval request for each patient, even where the medicine is NICE-approved. This creates significant administrative burden and delay.',
-      barriers:['Prior approval processes are primarily designed for medicines without NICE approval. Their application to TA-approved medicines is uncommon but not unheard of','Clinicians may not refer patients rather than complete burdensome paperwork','Approval turnaround can take weeks, delaying treatment'], tip:null },
+      barriers:['Prior approval processes are primarily designed for medicines without NICE approval. Their application to TA-approved medicines is uncommon but not unheard of','Clinicians may not refer patients rather than complete burdensome paperwork','Approval turnaround can take weeks, delaying treatment'], tip:null, cs:null },
     { type:'informal', title:'Clinician awareness and confidence', sub:'Does the prescriber know and trust the medicine?', dur:'6\u201318 months',
       what:'Even where all formal barriers are cleared, prescribing rates depend on whether clinicians are aware of the medicine, understand the evidence, feel confident in the indication, and see the medicine as part of their clinical routine.',
-      barriers:['Clinicians may be unaware a NICE TA has been published','Habit and inertia favour existing treatments','Concerns about side effects or monitoring requirements reduce prescribing confidence. Where new side effects emerge clinician confidence can be profoundly impaired','One enthusiastic early adopter can account for a disproportionate share of early prescribing'], tip:null }
+      barriers:['Clinicians may be unaware a NICE TA has been published','Habit and inertia favour existing treatments','Concerns about side effects or monitoring requirements reduce prescribing confidence. Where new side effects emerge clinician confidence can be profoundly impaired','One enthusiastic early adopter can account for a disproportionate share of early prescribing'], tip:null, cs:null }
   ]},
   { label:'Patient /\naccess', nodes:[
     { type:'informal', title:'Patient awareness and referral', sub:'Does the patient know to ask?', dur:'Variable',
       what:'Patients may not know a new treatment exists, may not be referred to the right specialist, or may not be empowered to ask about alternatives. This is particularly significant in conditions where patients are older, less health-literate, or socially disadvantaged.',
-      barriers:['Patient information does not automatically accompany NICE approvals','Primary care contractors may be unaware of new treatments and not refer','Patients from deprived populations are less likely to self-advocate','Language, literacy, and digital access barriers compound awareness gaps'], tip:null },
+      barriers:['Patient information does not automatically accompany NICE approvals','Primary care contractors may be unaware of new treatments and not refer','Patients from deprived populations are less likely to self-advocate','Language, literacy, and digital access barriers compound awareness gaps'], tip:null,
+      cs:{ title:'Palforzia (peanut oral immunotherapy)', body:'NICE approved Palforzia for peanut allergy desensitisation in children in February 2022. The BSACI\'s own consensus guidance acknowledged that demand for peanut immunotherapy outstrips current NHS capacity, with 58% of UK paediatric allergy centres unable to offer the service. At the point of NICE approval, only two NHS centres were providing Palforzia to patients. In early 2026, the manufacturer Stallergenes Greer confirmed it was discontinuing Palforzia worldwide — hospitals were advised not to start new patients after April 2026, leaving patients already on waiting lists with no alternative licensed treatment. A medicine that arrived ahead of the service infrastructure needed to deliver it was then discontinued before that infrastructure could be built.', tag:'Patient / access — service capacity', link:'https://www.anaphylaxis.org.uk/palforzia-peanut-oral-immunotherapy-update/' }
+    },
     { type:'clinical', title:'Consent, monitoring and adherence', sub:'Ongoing access is not automatic', dur:'Ongoing',
       what:'Once a patient is prescribed, ongoing access depends on successful consent, required monitoring tests, tolerability, and adherence. For many medicines these are complex, ongoing requirements.',
-      barriers:['Monitoring requirements may not be resourced in the prescribing setting','Patient adherence may be lower than in trial conditions','Some medicines require dispensing in a specific setting. Travel burden affects adherence','Discontinuation criteria may result in patients losing access even when they wish to continue'], tip:null }
+      barriers:['Monitoring requirements may not be resourced in the prescribing setting','Patient adherence may be lower than in trial conditions','Some medicines require dispensing in a specific setting. Travel burden affects adherence','Discontinuation criteria may result in patients losing access even when they wish to continue'], tip:null,
+      cs:{ title:'Kaftrio (elexacaftor/tezacaftor/ivacaftor)', body:'Kaftrio represented a transformative advance for people with cystic fibrosis, effective in around 90% of patients. NICE could not recommend it at list price — the cost per QALY was far above the standard threshold — and negotiations between NHS England and Vertex Pharmaceuticals were protracted. A landmark deal was reached in June 2020, making more than 7,000 people in England eligible. However, in November 2023, NICE\'s draft guidance concluded that Kaftrio remained too expensive for a permanent recommendation, triggering a further round of negotiations before permanent access was finally confirmed in June 2024 — four years after the initial deal. The case prompted lasting debate about NICE methodology, the valuation of transformative medicines for small populations, and whether the standard cost-effectiveness framework is fit for purpose in these circumstances.', tag:'NICE approval — commercial negotiation', link:'https://www.cysticfibrosis.org.uk/news/nice-approve-permanent-access-to-life-changing-cystic-fibrosis-drugs' }
+    }
   ]}
 ];
-
 var active = {};
 lanes.forEach(function(l){ active[l.key] = true; });
-
 function clockSvg(col) {
   return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
 }
-
+function bookSvg() {
+  return '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#DCE7E3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
+}
 function buildToggles() {
   var cont = document.getElementById('toggles');
   lanes.forEach(function(l) {
@@ -197,15 +215,12 @@ function buildToggles() {
     cont.appendChild(b);
   });
 }
-
 function buildGrid() {
   var grid = document.getElementById('grid');
   grid.style.gridTemplateColumns = '110px ' + lanes.map(function(){ return '1fr'; }).join(' ');
-
   var spacer = document.createElement('div');
   spacer.style.cssText = 'padding:6px 0;';
   grid.appendChild(spacer);
-
   lanes.forEach(function(l) {
     var h = document.createElement('div');
     h.className = 'col-header';
@@ -214,7 +229,6 @@ function buildGrid() {
     h.textContent = l.label;
     grid.appendChild(h);
   });
-
   stages.forEach(function(stage) {
     var labelCell = document.createElement('div');
     labelCell.className = 'stage-label-cell';
@@ -223,43 +237,42 @@ function buildGrid() {
     pill.textContent = stage.label.replace('\n',' ');
     labelCell.appendChild(pill);
     grid.appendChild(labelCell);
-
     lanes.forEach(function(lane) {
       var cell = document.createElement('div');
       cell.className = 'lane-cell';
       cell.dataset.lane = lane.key;
-
       var matching = stage.nodes.filter(function(n){ return n.type === lane.key; });
       var excluded = lane.key === 'formal' ? stage.nodes.filter(function(n){ return n.type === 'excluded'; }) : [];
-
       matching.forEach(function(node) {
         var n = document.createElement('div');
         n.className = 'node';
         n.style.background = lane.bg;
         n.style.borderColor = lane.border;
         var durHtml = node.dur ? '<div class="node-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></div>' : '';
-        n.innerHTML = '<div class="node-title" style="color:'+lane.tc+'">'+node.title+'</div><div class="node-sub" style="color:'+lane.sc+'">'+node.sub+'</div>'+durHtml;
+        var csHtml = node.cs ? '<div class="node-cs-badge">'+bookSvg()+'Case study</div>' : '';
+        n.innerHTML = '<div class="node-title" style="color:'+lane.tc+'">'+node.title+'</div><div class="node-sub" style="color:'+lane.sc+'">'+node.sub+'</div>'+durHtml+csHtml;
         n.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
         cell.appendChild(n);
       });
-
       excluded.forEach(function(node) {
         var n = document.createElement('div');
         n.className = 'node-excl';
         n.innerHTML = '<div class="node-title">'+node.title+'</div><div class="node-sub">'+node.sub+'</div><div><span class="excl-badge">'+node.badge+'</span></div>';
         cell.appendChild(n);
       });
-
       grid.appendChild(cell);
     });
   });
 }
-
 function openPanel(node, stageLabel, lane) {
   var c = document.getElementById('panel-content');
   var durHtml = node.dur ? '<div class="panel-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></div>' : '';
   var barriersHtml = node.barriers.map(function(b){ return '<li>'+b+'</li>'; }).join('');
   var tipHtml = node.tip ? '<h3>Insight</h3><div class="insight">'+node.tip+'</div>' : '';
+  var csHtml = '';
+  if (node.cs) {
+    csHtml = '<hr class="panel-divider"><div class="case-card"><div class="case-label">'+bookSvg()+' Case study</div><div class="case-title">'+node.cs.title+'</div><div class="case-body">'+node.cs.body+'</div><div><span class="case-tag">'+node.cs.tag+'</span><a class="case-link" href="'+node.cs.link+'" target="_blank" rel="noopener">Read more &rarr;</a></div></div>';
+  }
   c.innerHTML =
     '<div class="panel-type" style="background:'+lane.togBg+';color:'+lane.togText+'">'+typeLabels[node.type]+'</div>'+
     '<h2>'+node.title+'</h2>'+
@@ -267,16 +280,14 @@ function openPanel(node, stageLabel, lane) {
     durHtml+
     '<h3>What this is</h3><p>'+node.what+'</p>'+
     '<h3>Key barriers</h3><ul>'+barriersHtml+'</ul>'+
-    tipHtml;
+    tipHtml+csHtml;
   document.getElementById('panel').classList.add('open');
   document.getElementById('overlay').classList.add('open');
 }
-
 function closePanel() {
   document.getElementById('panel').classList.remove('open');
   document.getElementById('overlay').classList.remove('open');
 }
-
 buildToggles();
 buildGrid();
 </script>
