@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Approval to Access: The 90 Day Myth | The Prescription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;450;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F4F2EC; --surface: #FFFFFF; --line: #E7E2D8; --line-soft: #EFEBE2;
+  --ink: #191817; --muted: #6E6A63; --faint: #95908701;
+  --green: #2F6B5F; --green-deep: #1C4A3F; --green-pale: #E7F0EC;
+  --serif: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--sans); background: var(--bg); color: var(--ink); min-height: 100vh; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+.page { max-width: 1060px; margin: 0 auto; padding: 3.5rem 1.5rem 5rem; }
+
+/* Header */
+.brand-header { display: flex; align-items: center; gap: 12px; margin-bottom: 2.75rem; }
+.brand-bar { width: 4px; height: 34px; background: var(--green); border-radius: 0; flex-shrink: 0; }
+.brand-name { font-family: var(--serif); font-size: 17px; font-weight: 600; letter-spacing: 0.01em; color: var(--ink); line-height: 1.1; }
+.brand-tag { font-family: var(--sans); font-size: 11px; color: var(--muted); margin-top: 1px; letter-spacing: 0.01em; }
+
+.page-title { font-family: var(--serif); font-size: 42px; font-weight: 600; line-height: 1.07; letter-spacing: -0.015em; margin-bottom: 1.75rem; max-width: 22ch; }
+
+.intro-row { display: flex; gap: 48px; align-items: flex-start; margin-bottom: 2rem; }
+.intro-main { flex: 1.5; min-width: 0; }
+.intro-meta { flex: 1; min-width: 0; border-left: 1px solid var(--line); padding-left: 28px; }
+.intro { font-size: 17px; line-height: 1.6; color: var(--ink); margin-bottom: 1.5rem; font-weight: 400; }
+.scope { font-size: 13.5px; line-height: 1.6; color: var(--ink); border-left: 2px solid var(--green); padding-left: 14px; }
+.scope strong { font-weight: 600; }
+.notes-label { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.intro-meta p { font-size: 11.5px; line-height: 1.6; color: var(--muted); margin-bottom: 9px; }
+.intro-meta p strong { color: var(--ink); font-weight: 600; }
+
+/* Controls */
+.barrier-filter { display: none; flex-wrap: wrap; gap: 6px; margin-bottom: 1.25rem; }
+.barrier-chip { font-family: var(--sans); font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 2px; border: 1px solid var(--line); cursor: pointer; transition: opacity 0.15s; user-select: none; }
+.barrier-chip.off { opacity: 0.3; }
+
+.toolbar-hint { font-size: 11px; color: var(--muted); margin-bottom: 0.75rem; font-weight: 450; }
+
+/* Grid */
+.grid-outer { overflow-x: auto; border: 1px solid var(--line); border-radius: 4px; background: var(--surface); }
+.grid { display: grid; min-width: 760px; }
+.col-header {
+  font-family: var(--sans); font-size: 10px; font-weight: 700;
+  text-align: center; padding: 10px 6px; letter-spacing: 0.04em; text-transform: uppercase;
+  cursor: pointer; user-select: none; transition: opacity 0.15s; position: relative;
+  border-bottom: 1px solid var(--line);
+}
+.col-header:hover { filter: brightness(0.96); }
+.col-header.off { opacity: 0.35; }
+.col-header .hide-hint { font-size: 8.5px; font-weight: 500; display: block; margin-top: 3px; opacity: 0.65; text-transform: none; letter-spacing: 0; }
+.stage-label-cell { display: flex; align-items: center; padding: 12px 12px 12px 14px; border-bottom: 1px solid var(--line-soft); }
+.stage-pill { font-family: var(--sans); font-size: 10.5px; font-weight: 600; color: var(--ink); line-height: 1.3; letter-spacing: 0.01em; }
+.lane-cell { padding: 10px 8px; border-bottom: 1px solid var(--line-soft); border-left: 1px solid var(--line-soft); display: flex; flex-direction: column; gap: 7px; min-height: 64px; transition: opacity 0.2s; }
+.lane-cell.hidden { opacity: 0; pointer-events: none; }
+
+/* Node */
+.node { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 3px; padding: 10px 12px; cursor: pointer; transition: border-color 0.12s, box-shadow 0.12s; font-family: var(--sans); }
+.node:hover { border-color: #CFC8BA; box-shadow: 0 1px 3px rgba(25,24,23,0.06); }
+.node-title { font-weight: 600; font-size: 12.5px; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
+.node-sub { font-size: 11px; line-height: 1.35; color: var(--muted); margin-bottom: 6px; }
+.node-badges { display: flex; flex-wrap: wrap; gap: 5px; align-items: center; }
+.node-dur { display: inline-flex; align-items: center; gap: 3px; }
+.node-dur span { font-size: 10px; font-weight: 600; color: var(--muted); }
+.node-cs-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 2px; background: var(--green-deep); color: #DCEAE5; letter-spacing: 0.02em; }
+.node-lock-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 600; padding: 2px 7px; border-radius: 2px; background: #EFEBE2; color: #8A8175; border: 1px solid #DDD6C8; }
+.node-partner-badge { display: inline-flex; align-items: center; gap: 3px; font-size: 9px; font-weight: 700; padding: 2px 8px; border-radius: 2px; background: var(--green); color: #FFFFFF; letter-spacing: 0.02em; }
+.node-excl { background: transparent; border: 1px dashed #CFC8BA; border-radius: 3px; padding: 10px 12px; opacity: 0.7; }
+.node-excl .node-title { text-decoration: line-through; }
+.excl-badge { font-size: 9px; padding: 2px 6px; border-radius: 2px; background: #EFEBE2; color: #8A8175; display: inline-block; margin-top: 4px; font-weight: 600; }
+
+/* Panel */
+.panel-overlay { display: none; position: fixed; inset: 0; background: rgba(25,24,23,0.28); z-index: 99; }
+.panel-overlay.open { display: block; }
+.panel { position: fixed; top: 0; right: 0; width: 380px; height: 100%; background: var(--surface); border-left: 1px solid var(--line); padding: 30px 26px; overflow-y: auto; transform: translateX(100%); transition: transform 0.22s cubic-bezier(0.4,0,0.2,1); z-index: 100; box-shadow: -8px 0 30px rgba(25,24,23,0.06); }
+.panel.open { transform: translateX(0); }
+.panel-close { float: right; background: none; border: 1px solid var(--line); border-radius: 3px; padding: 4px 11px; cursor: pointer; font-size: 11px; color: var(--muted); font-family: var(--sans); font-weight: 500; }
+.panel-close:hover { background: var(--bg); color: var(--ink); }
+.panel-type { display: inline-block; font-size: 10px; padding: 3px 9px; border-radius: 2px; font-weight: 600; margin-bottom: 12px; font-family: var(--sans); letter-spacing: 0.03em; }
+.panel-dur { display: flex; align-items: center; gap: 6px; margin-bottom: 14px; }
+.panel-dur span { font-size: 11px; font-weight: 600; color: var(--muted); font-family: var(--sans); }
+.panel h2 { font-family: var(--serif); font-size: 20px; font-weight: 600; margin: 0 0 4px; color: var(--ink); line-height: 1.2; letter-spacing: -0.01em; }
+.panel-stage { font-size: 10.5px; color: var(--muted); margin-bottom: 16px; font-family: var(--sans); font-weight: 500; letter-spacing: 0.02em; }
+.panel h3 { font-size: 10px; font-weight: 700; margin: 18px 0 7px; color: var(--green); text-transform: uppercase; letter-spacing: 0.09em; font-family: var(--sans); }
+.panel p { font-size: 13px; line-height: 1.65; font-family: var(--sans); color: var(--ink); }
+.panel ul { padding-left: 16px; }
+.panel li { font-size: 12px; line-height: 1.6; margin-bottom: 5px; font-family: var(--sans); color: var(--ink); }
+.insight { padding: 11px 13px; background: var(--green-pale); border-left: 2px solid var(--green); font-size: 11.5px; line-height: 1.6; font-family: var(--sans); margin-top: 4px; color: var(--ink); }
+.panel-divider { border: none; border-top: 1px solid var(--line); margin: 18px 0; }
+
+/* Case study card */
+.case-card { background: var(--green-deep); border-radius: 4px; padding: 14px 16px; margin-top: 4px; }
+.case-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8FC4B7; margin-bottom: 7px; display: flex; align-items: center; gap: 5px; font-family: var(--sans); }
+.case-title { font-size: 13px; font-weight: 700; color: #FBFAF8; margin-bottom: 7px; font-family: var(--sans); }
+.case-body { font-size: 11.5px; line-height: 1.65; color: #C5DDD6; font-family: var(--sans); }
+.case-tag { display: inline-block; font-size: 9px; padding: 3px 8px; border-radius: 2px; background: var(--green); color: #DCEAE5; margin-top: 10px; font-weight: 600; font-family: var(--sans); }
+.case-link { display: inline-block; font-size: 10.5px; color: #8FC4B7; margin-top: 10px; margin-left: 8px; font-family: var(--sans); font-weight: 500; text-decoration: underline; text-underline-offset: 2px; cursor: pointer; }
+.free-flag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green-deep); background: #BFE0D6; padding: 3px 8px; border-radius: 2px; margin-top: 10px; font-family: var(--sans); }
+
+/* Locked card */
+.case-card.locked { background: #F0ECE3; border: 1px solid #E0D9CB; }
+.case-card.locked .case-label { color: #9A8F7C; }
+.case-card.locked .case-title { color: #574E40; }
+.case-card.locked .case-locked-text { font-size: 11.5px; line-height: 1.6; color: #7E7461; font-family: var(--sans); }
+.lock-cta { display: inline-block; margin-top: 11px; font-size: 11px; font-weight: 700; color: #FFFFFF; background: var(--green); padding: 7px 13px; border-radius: 3px; text-decoration: none; font-family: var(--sans); cursor: pointer; }
+.lock-cta:hover { background: var(--green-deep); }
+
+/* Partnership card */
+.partner-card { border-radius: 4px; padding: 15px 16px; margin-top: 16px; background: var(--green); box-shadow: 0 2px 12px rgba(47,107,95,0.22); }
+.partner-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #BFE3D9; margin-bottom: 7px; display: flex; align-items: center; gap: 5px; font-family: var(--sans); }
+.partner-title { font-size: 14px; font-weight: 700; color: #FFFFFF; margin-bottom: 7px; font-family: var(--sans); }
+.partner-locked-text { font-size: 11.5px; line-height: 1.65; color: #E0F0EB; font-family: var(--sans); }
+.partner-cta { display: inline-block; margin-top: 11px; font-size: 11px; font-weight: 700; color: var(--green-deep); background: #FFFFFF; padding: 7px 13px; border-radius: 3px; text-decoration: none; font-family: var(--sans); cursor: pointer; }
+.partner-cta:hover { background: #E0F0EB; }
+.panel-partner-flag { display: inline-flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 700; padding: 3px 9px; border-radius: 2px; background: var(--green); color: #fff; letter-spacing: 0.03em; margin-bottom: 14px; }
+.partner-body { font-size: 11.5px; line-height: 1.65; color: #E0F0EB; font-family: var(--sans); }
+
+/* Consolidated course CTA */
+.course-cta { margin-top: 1.75rem; background: var(--green-deep); border-radius: 4px; padding: 28px 30px; }
+.course-cta-label { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #8FC4B7; margin-bottom: 9px; display: flex; align-items: center; gap: 5px; font-family: var(--sans); }
+.course-cta-title { font-family: var(--serif); font-size: 24px; font-weight: 600; color: #FBFAF8; margin-bottom: 10px; letter-spacing: -0.015em; }
+.course-cta-body { font-size: 14px; line-height: 1.65; color: #C5DDD6; font-family: var(--sans); margin-bottom: 16px; max-width: 70ch; }
+.course-cta-list { list-style: none; margin: 0 0 20px; padding: 0; }
+.course-cta-list li { font-size: 12.5px; line-height: 1.55; color: #DCEAE5; font-family: var(--sans); padding-left: 20px; position: relative; margin-bottom: 8px; max-width: 68ch; }
+.course-cta-list li::before { content: ''; position: absolute; left: 0; top: 7px; width: 7px; height: 7px; background: #8FC4B7; border-radius: 50%; }
+.course-cta-btn { display: inline-block; font-size: 13px; font-weight: 700; color: var(--green-deep); background: #FFFFFF; padding: 12px 24px; border-radius: 3px; text-decoration: none; font-family: var(--sans); cursor: pointer; }
+.course-cta-btn:hover { background: #E0F0EB; }
+
+/* Footer */
+.footer { margin-top: 3rem; padding-top: 1.25rem; border-top: 1px solid var(--line); }
+.footer-main { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.footer-bar { width: 3px; height: 26px; background: var(--green); flex-shrink: 0; }
+.footer-txt { font-family: var(--serif); font-size: 12px; color: var(--ink); font-style: italic; }
+.footer-by { font-size: 11px; color: var(--muted); line-height: 1.6; }
+.footer-by a { color: var(--green); text-decoration: none; font-weight: 500; }
+.footer-by a:hover { text-decoration: underline; }
+
+/* Stack (mobile) */
+.stack { display: none; }
+.stack-stage { margin-bottom: 1.5rem; }
+.stack-stage-label { font-family: var(--sans); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--green-deep); padding: 0 0 8px; border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.stack-card { background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--green); border-radius: 3px; padding: 13px 15px; margin-bottom: 9px; cursor: pointer; transition: opacity 0.2s; font-family: var(--sans); }
+.stack-card-type { display: inline-block; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; padding: 2px 7px; border-radius: 2px; margin-bottom: 7px; }
+.stack-card-title { font-weight: 700; font-size: 14px; color: var(--ink); margin-bottom: 3px; line-height: 1.3; }
+.stack-card-sub { font-size: 12px; line-height: 1.4; color: var(--muted); margin-bottom: 8px; }
+.stack-card-excl { border: 1px dashed #CFC8BA; border-radius: 3px; padding: 13px 15px; margin-bottom: 9px; opacity: 0.6; }
+.stack-card-excl .stack-card-title { text-decoration: line-through; }
+
+@media (max-width: 1024px) and (min-width: 641px) {
+  .panel { width: 100%; max-width: 520px; left: 0; right: 0; margin: 0 auto; top: auto; bottom: 0; height: 82%; border-left: none; border-top: 1px solid var(--line); border-radius: 10px 10px 0 0; transform: translateY(100%); }
+  .panel.open { transform: translateY(0); }
+}
+@media (max-width: 860px) {
+  .intro-row { flex-direction: column; gap: 24px; }
+  .intro-meta { border-left: none; border-top: 1px solid var(--line); padding-left: 0; padding-top: 20px; }
+}
+@media (max-width: 640px) {
+  .page { padding: 2.25rem 1.15rem 3.5rem; }
+  .page-title { font-size: 30px; }
+  .course-cta { padding: 22px 20px; }
+  .course-cta-title { font-size: 21px; }
+  .intro { font-size: 15px; }
+  .grid-outer { display: none; }
+  .stack { display: block; }
+  .barrier-filter { display: flex; }
+  .panel { width: 100%; max-width: none; left: 0; right: 0; top: auto; bottom: 0; height: 86%; border-left: none; border-top: 1px solid var(--line); border-radius: 10px 10px 0 0; transform: translateY(100%); }
+  .panel.open { transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="brand-header">
+    <div class="brand-bar"></div>
+    <div>
+      <div class="brand-name">The Prescription</div>
+      <div class="brand-tag">for clarity in complexity</div>
+    </div>
+  </div>
+
+  <h1 class="page-title">Approval to Access: The 90 Day Myth</h1>
+
+  <div class="intro-row">
+    <div class="intro-main">
+      <p class="intro">A medicine being approved by a NICE Technology Appraisal doesn't mean that it automatically becomes available to or used by every eligible patient. This tool and the associated course intends to show the system as it really is, not how it is intended to be.</p>
+      <div class="scope"><strong>Scope.</strong> This flow covers medicines commissioned by ICBs following routine NICE technology appraisal. Specialised commissioning (NHS England direct) is out of scope. That pathway diverges at NICE publication and follows a separate route toward implementation.</div>
+    </div>
+    <div class="intro-meta">
+      <div class="notes-label">About this tool</div>
+      <p><strong>Independent and personal.</strong> This tool is produced independently through The Prescription. It reflects general patterns in the medicines access system in England and represents the personal views of the author. It does not represent the views, policies, or position of any NHS organisation, employer, or other body, and does not refer to any specific ICB, provider, or organisation. It is for education and discussion. It is not guidance, and should not be relied upon for clinical, commercial, or commissioning decisions.</p>
+      <p><strong>A snapshot in time.</strong> This reflects the expected process based on national guidance and typical practice. Local variation exists, and NHS structures, policy, and priorities may change the detail or timelines shown here. Last reviewed June 2026.</p>
+      <p><strong>Concurrent steps.</strong> Many of these steps run concurrently rather than sequentially. Durations reflect typical elapsed time for each step in isolation.</p>
+    </div>
+  </div>
+
+  <div class="toolbar-hint">Click any node for detail. Click a column header to hide or show that barrier type.</div>
+
+  <div class="barrier-filter" id="barrier-filter"></div>
+
+  <div class="grid-outer"><div class="grid" id="grid"></div></div>
+  <div class="stack" id="stack"></div>
+
+  <div class="course-cta">
+    <div class="course-cta-label">&#129309; The course</div>
+    <div class="course-cta-title">Approval to Access: implementation intelligence for medicines</div>
+    <div class="course-cta-body">This free tool maps the barriers a medicine can meet on its way from approval to patients. The course goes further. It works through where a medicine is most likely to meet resistance, and where a genuine partnership with the NHS could ease that path so more eligible patients are treated.</div>
+    <ul class="course-cta-list">
+      <li>Worked case studies, with the data behind expected versus actual uptake</li>
+      <li>Published NHS and industry collaborations behind each partnership opportunity, with sources</li>
+      <li>A structured way to explore the partnership potential for a medicine of your own</li>
+    </ul>
+    <a class="course-cta-btn" onclick="goCourse()">Register your interest &rarr;</a>
+  </div>
+
+  <div class="footer">
+    <div class="footer-main">
+      <div class="footer-bar"></div>
+      <div class="footer-txt">The Prescription &mdash; for clarity in complexity</div>
+    </div>
+    <div class="footer-by">Built by Ewan Maule. Read more and find the course at <a href="https://theprescription.co.uk" target="_blank" rel="noopener">theprescription.co.uk</a></div>
+  </div>
+</div>
+<div class="panel-overlay" id="overlay" onclick="closePanel()"></div>
+<div class="panel" id="panel">
+  <button class="panel-close" onclick="closePanel()">Close</button>
+  <div id="panel-content"></div>
+</div>
+<script>
+var lanes = [
+  { key:'formal',        label:'Formal / regulatory',    bg:'#FFFFFF', border:'#E7E2D8', tc:'#191817', sc:'#2F6B5F', togBg:'#E4EEEA', togText:'#1C4A3F', hBg:'#E4EEEA', hText:'#1C4A3F' },
+  { key:'commissioning', label:'Commissioning / funding', bg:'#FFFFFF', border:'#E7E2D8', tc:'#191817', sc:'#3D6E92', togBg:'#E5EDF3', togText:'#274863', hBg:'#E5EDF3', hText:'#274863' },
+  { key:'operational',   label:'Operational / supply',   bg:'#FFFFFF', border:'#E7E2D8', tc:'#191817', sc:'#A0673A', togBg:'#F3E9E0', togText:'#5C3A20', hBg:'#F3E9E0', hText:'#5C3A20' },
+  { key:'clinical',      label:'Clinical / prescribing', bg:'#FFFFFF', border:'#E7E2D8', tc:'#191817', sc:'#5F7049', togBg:'#EAEEE2', togText:'#3A4A2A', hBg:'#EAEEE2', hText:'#3A4A2A' },
+  { key:'informal',      label:'Informal / cultural',    bg:'#FFFFFF', border:'#E7E2D8', tc:'#191817', sc:'#7C5E72', togBg:'#EFE8ED', togText:'#4A3040', hBg:'#EFE8ED', hText:'#4A3040' }
+];
+var typeLabels = { formal:'Formal / regulatory', commissioning:'Commissioning / funding', operational:'Operational / supply', clinical:'Clinical / prescribing', informal:'Informal / cultural' };
+var activeLanes = {};
+lanes.forEach(function(l){ activeLanes[l.key] = true; });
+
+var stages = [{"label":"NICE approval","nodes":[{"type":"formal","title":"NICE technology appraisal","sub":"Positive recommendation issued","dur":"Within statutory funding period","what":["NICE issues a positive technology appraisal recommendation for a medicine or technology in a defined population. For routine commissioning technology appraisals, this creates a statutory obligation for the NHS in England to make funding available within the required implementation period.","This is an important national access mechanism, but it is not the same as operational readiness. A positive recommendation confirms that a medicine should be available for eligible patients. It does not automatically create the clinical pathway, workforce capacity, prescribing confidence, monitoring arrangements or local implementation plan required for routine use."],"considerations":["The mandatory funding direction applies to NICE technology appraisals, not to every NICE guideline, pathway or evidence review.","The recommended population may be narrower than the licensed indication.","Some recommendations are made through managed access routes, where routine commissioning depends on further evidence generation.","A positive recommendation does not remove the need to plan how eligible patients will be identified, assessed, treated and monitored."],"pub":true,"module":"Module 1: Understanding the implementation system","cs":null},{"type":"commissioning","title":"National commercial agreement","sub":"Patient access scheme, discount, rebate or managed access","dur":"1–6 months","what":["A positive NICE recommendation may depend on a confidential commercial arrangement agreed nationally between NHS England and the manufacturer. This may be a simple discount, patient access scheme, commercial access agreement, rebate, outcome-based arrangement or managed access agreement.","Although the commercial arrangement is agreed nationally, it still has to work locally. The route from list price to net price may depend on coding, claims, reimbursement, rebate flows, data capture or specific prescribing arrangements. If those mechanisms are not understood and tested, a medicine can be cost-effective nationally but still difficult to implement locally."],"considerations":["Local organisations may see list price but not the confidential net price.","The organisation incurring the operational cost may not be the organisation receiving the financial benefit.","Rebate, claims, coding and reimbursement processes may create administrative burden.","Commercial mechanisms need to be stress tested against the real pathway before implementation.","Incentives should align across commissioners, providers and clinicians, rather than pushing cost, risk or workload into the wrong part of the system."],"pub":true,"module":"Module 3: Commercial and financial implementation","cs":{"free":true,"title":"Inclisiran (Leqvio)","body":"Inclisiran reached primary care through a specific national arrangement. NHS England agreed a population health deal with Novartis in 2021 and centrally funded the medicine, deliberately removing local cost as a barrier so it could be offered at scale in primary care. That national arrangement was the thing that made primary care use possible. But it also showed the limits of a national deal. Funding the medicine centrally did not, on its own, create the local pathways, clinical confidence or delivery capacity needed, and uptake stayed far below the 300,000 patients expected by 2024.","tag":"NICE approval — national arrangement","link":"https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal"}},{"type":"excluded","clickable":true,"title":"Specialised commissioning","sub":"NHS England direct — out of scope","badge":"Out of scope","dur":"Variable","what":["Some medicines and services are directly commissioned by NHS England rather than by ICBs. These may include highly specialised services, certain high-cost medicines and treatments delivered through nationally specified service arrangements.","This node is shown as out of scope in the free tool because the access route is materially different from local ICB-led implementation. However, the same principle still applies: national approval does not automatically guarantee operational access unless pathways, capacity, eligibility and funding flows are clear."],"considerations":["The responsible commissioner may be NHS England rather than the ICB.","Access may depend on nationally designated providers or specialised centres.","Eligibility and pathway requirements may differ from locally commissioned services.","Local clinicians may still need to understand referral routes and patient identification criteria."],"pub":true,"module":"Module 1: Understanding the implementation system","cs":null}]},{"label":"ICB / system","nodes":[{"type":"commissioning","title":"ICB medicines decision making committee review","sub":"Area Prescribing Committee or equivalent","dur":"2–6 months","what":["The ICB Area Prescribing Committee, medicines committee or equivalent governance group considers how a NICE-approved medicine should be implemented locally. This may include formulary placement, prescribing responsibilities, pathway fit, commissioning implications and provider alignment.","This stage is not simply a repeat of NICE appraisal. It is the point where national guidance is translated into local implementation. The challenge is ensuring that governance adds clarity and consistency without creating unnecessary additional steps for eligible patients."],"considerations":["Committee meeting dates may not align with the timing of final NICE guidance.","Some systems have subgroups or escalation routes that add further steps before implementation.","Delegated authority varies between systems, so approval may require escalation.","Local pathway, finance and clinical governance issues may need to be resolved before implementation.","The same medicine may require alignment across several providers and sectors."],"pub":true,"module":"Module 1: Understanding the implementation system","cs":null},{"type":"commissioning","partner":true,"title":"System budget impact assessment","sub":"Local prevalence and cost modelling","dur":"1–12 months","what":["The ICB or system assesses the likely local impact of implementing a medicine. This may include prevalence, incidence, eligible population, treatment duration, expected uptake, net cost, administration cost, monitoring requirements and displaced activity.","Budget impact is not the same as cost-effectiveness. A medicine may be cost-effective nationally and still create a significant local in-year pressure. Systems therefore need to understand not only the medicine cost, but the total implementation impact across pathways and organisations."],"considerations":["Local organisations may model budget impact using list price rather than net price.","NICE estimates may be based on trial populations rather than local real-world populations.","Uptake may be faster or slower than expected depending on pathway readiness.","In-year investment may be difficult where the medicine was not included in planning assumptions.","Affordability should not be used to withhold a NICE-approved medicine, but financial planning still affects implementation behaviour."],"partnerText":"NHS organisations and industry can work together on non-promotional population modelling, epidemiology, pathway mapping and implementation planning, using transparent assumptions and published data.","pub":true,"module":"Module 3: Commercial and financial implementation","cs":{"locked":true,"title":"GLP-1 receptor agonists (semaglutide, tirzepatide)","tag":"ICB / system — commissioning / funding"}},{"type":"commissioning","title":"Prescribing pathway / RAG classification","sub":"Traffic light or formulary status","dur":"3–6 months","what":["The ICB assigns a formulary position or traffic light classification. This determines whether the medicine is usually prescribed in secondary care, shared care, primary care or another setting. It may also define whether specialist initiation, prior approval or ongoing monitoring is required.","This step is important because prescribing responsibility is not always obvious from NICE guidance. The same medicine can create very different operational implications depending on whether it is specialist-only, shared care, green-listed or subject to local restrictions."],"considerations":["NICE guidance does not always specify the appropriate prescribing setting.","Local clinical pathways may not align neatly with the NICE appraisal population.","RAG classification can vary between systems.","Prior approval requirements may be added locally.","Prescribing status affects workload, monitoring, liability and patient convenience."],"pub":true,"module":"Module 4: Designing pathways and services","cs":null}]},{"label":"Provider /\nsecondary care","nodes":[{"type":"operational","title":"Provider Drug & Therapeutics Committee","sub":"Provider formulary decision","dur":"1–3 months","what":["Even after ICB approval, individual NHS providers may have their own Drug and Therapeutics Committee or equivalent formulary governance process. This committee considers how the medicine will be used within the provider, including clinical governance, operational readiness, finance, pharmacy processes and local protocols.","Provider governance matters because the provider may be responsible for delivery, even when the commissioner holds the statutory funding duty. A medicine can be approved in principle but still require provider-level work before it can be prescribed routinely."],"considerations":["Provider committees may have independent governance responsibilities.","High-cost medicines may create cost or cash-flow issues depending on contract structure.","Providers may need local protocols, pharmacy processes, stock arrangements or clinical approval routes.","Implementation may depend on clinical leadership within the relevant specialty.","Provider-level criteria may create variation if not aligned with ICB and NICE requirements."],"pub":true,"module":"Module 4: Designing pathways and services","cs":null},{"type":"operational","partner":true,"title":"Service capacity and resource planning","sub":"Can the provider actually deliver the service?","dur":"3–12 months","what":["A medicine being recommended, funded and listed on a formulary does not mean the service has the capacity to deliver it. Many medicines require additional clinic time, specialist nursing, pharmacy capacity, infusion space, diagnostics, monitoring, administration training or follow-up appointments.","This is often where implementation becomes real. If a medicine changes the workload of a service, then access depends on whether the service model has been redesigned to absorb that workload safely."],"considerations":["Infusion, injection or administration capacity may be limited.","Specialist nursing, pharmacy or medical time may not be funded in existing contracts.","Outpatient demand may increase if more patients become eligible for assessment.","Diagnostics and monitoring may become bottlenecks.","Tariff, block contract or pass-through arrangements may not cover the full cost of delivery."],"partnerText":"NHS organisations and industry can legitimately collaborate on service redesign, capacity modelling, workforce education and pathway implementation, where the project is transparent, non-promotional and designed to benefit patients or the NHS.","pub":true,"module":"Module 4: Designing pathways and services","cs":[{"locked":true,"title":"CGRP monoclonal antibodies (erenumab, fremanezumab, galcanezumab)","tag":"Provider / secondary care — capacity"},{"locked":true,"title":"Palforzia (peanut oral immunotherapy)","tag":"Provider / secondary care — capacity (discontinued 2026)"}]}]},{"label":"Shared care","nodes":[{"type":"commissioning","title":"Shared care protocol development","sub":"Provider, ICB and primary care agreement","dur":"6–12 months","what":["Where ongoing prescribing or monitoring transfers from secondary care to primary care, a shared care protocol may be required. The protocol defines clinical responsibilities, initiation arrangements, monitoring requirements, dose adjustment, communication routes and escalation criteria.","Shared care is not just a document. It is an agreement between organisations and professionals about risk, workload and responsibility. If the protocol is unclear, burdensome or poorly supported, implementation may stall even after the medicine is formally approved."],"considerations":["Protocol development and ratification can take several months.","Responsibilities need to be clinically safe and operationally realistic.","Monitoring requirements must be manageable in primary care.","Liability concerns may affect acceptance.","Local enhanced service arrangements may be required where workload sits outside core contractual expectations."],"pub":true,"module":"Module 4: Designing pathways and services","cs":null},{"type":"informal","partner":true,"title":"Primary care contractor acceptance","sub":"Individual contractors must opt in","dur":"6–12 months","what":["Even where an ICB has approved a shared care protocol, individual primary care contractors may still need to accept responsibility for prescribing and monitoring their registered patients. This can create variation in access within the same ICB.","Contractor acceptance is influenced by workload, confidence, perceived risk, indemnity, local relationships and the level of support available. A technically approved pathway may not become a functioning pathway unless primary care sees it as safe, supported and realistic."],"considerations":["Individual contractors may not be obliged to accept shared care.","Shared care may be viewed as additional work beyond core contractual responsibilities.","Workload and indemnity concerns can affect acceptance.","Confidence may vary between practices.","Systems may not have a reliable process for tracking acceptance across practices."],"partnerText":"NHS organisations and industry can support general education, implementation resources and workload modelling to help systems understand what makes shared care acceptable and deliverable. The focus should be on system readiness, not pressure on individual contractors.","pub":true,"module":"Module 4: Designing pathways and services","cs":null},{"type":"operational","title":"Monitoring and ongoing review","sub":"Sustaining shared care in practice","dur":"Ongoing","what":["Once shared care or primary care prescribing is live, ongoing access depends on reliable monitoring, recall, review, dose adjustment and escalation. The pathway has to work repeatedly, not just at initiation.","Monitoring is often underestimated during implementation. If responsibility is unclear, appointments are not resourced, or recall systems are unreliable, patients may receive inconsistent follow-up. This can create clinical risk and reduce confidence in the pathway."],"considerations":["Recall systems may vary between practices and providers.","Monitoring requirements may be burdensome or poorly resourced.","Patients may not attend required monitoring appointments.","Escalation routes back to specialist care need to be clear.","Clinical systems need to support safe ongoing prescribing."],"pub":true,"module":"Module 4: Designing pathways and services","cs":null}]},{"label":"Primary care","nodes":[{"type":"commissioning","title":"Primary care formulary and green listing","sub":"ICB green status enables primary care prescribing","dur":"1–3 months","what":["For medicines classified as green on the ICB formulary, primary care contractors can prescribe without shared care or specialist initiation. In theory, this should allow broad access through routine primary care.","In practice, green listing is only one part of implementation. The medicine also needs to be visible in clinical systems, understood by prescribers, embedded in local pathways and supported by the right prompts, searches, templates and prescribing information."],"considerations":["Green status does not guarantee visibility in EMIS, SystmOne or prescribing decision support tools.","Dosing guidance, monitoring requirements and patient information may not be embedded in workflows.","Primary care teams may not know the medicine has been green-listed.","Clinical confidence may lag behind formulary status.","Prescribing incentives can either support or suppress adoption depending on their design."],"pub":true,"module":"Module 4: Designing pathways and services","cs":{"free":true,"title":"Inclisiran (Leqvio)","body":"Inclisiran shows how formulary classification alone shapes access. Although designed for primary care, it was not classified consistently. Some systems green-listed it for open primary care prescribing, while others treated it as amber, requiring shared care or specialist involvement. The same nationally funded medicine therefore faced very different local prescribing routes depending on the ICB, which contributed to uneven uptake across the country.","tag":"Primary care — formulary status","link":"https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal"}},{"type":"commissioning","title":"Local commissioning and enhanced services","sub":"Locally enhanced services and incentive schemes","dur":"Variable","what":["Beyond formulary status, the level of local commissioning support can strongly influence whether a medicine is actually prescribed in primary care. Locally enhanced services and incentive schemes can increase prescribing of a new medicine, either by explicitly funding the activity involved or by implicitly supporting the wider work around it.","Because these arrangements are commissioned by individual ICBs, they vary from place to place. There is no single, consistent view of exactly what is included within the core primary care contract, so the same activity may be treated as already covered in one area and as requiring a separate locally enhanced service in another. This is one of the main, and growing, sources of variation in access between different parts of the country."],"considerations":["Locally enhanced services and incentive schemes are commissioned locally, so their presence, design and value vary between ICBs.","There is no clear, consistent definition of what the core primary care contract includes, which leads to different local interpretations.","Some areas fund specific activity through a locally enhanced service where others consider it part of existing arrangements.","Incentive schemes can increase or suppress prescribing depending on how they are designed and what they reward.","This variation means the same nationally approved medicine can be actively supported in one area and left to existing capacity in another."],"pub":true,"module":"Module 4: Designing pathways and services","cs":{"free":true,"title":"Inclisiran (Leqvio)","body":"Inclisiran is a clear example of how local commissioning shapes uptake. In some areas a locally enhanced service or incentive was put in place to fund the activity of identifying eligible patients and administering the injection. In others, that activity was expected to happen within existing arrangements. Whether the work was funded locally, and how, varied between ICBs and was one of the factors behind very different prescribing rates for the same nationally funded medicine.","tag":"Primary care — local commissioning","link":"https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal"}},{"type":"informal","partner":true,"title":"Primary care prescribing awareness and confidence","sub":"Will the primary care contractor actually prescribe?","dur":"6–24 months","what":["Even where a medicine is green-listed and technically available in primary care, prescribing depends on awareness, confidence, familiarity and perceived clinical risk. Primary care clinicians may be cautious where the condition has historically been specialist-led or where monitoring responsibilities are unclear.","This is not simply an information deficit. Prescribing behaviour reflects workload, confidence, incentives, experience, peer norms, clinical system prompts and the perceived consequences of getting it wrong."],"considerations":["Primary care clinicians may be unfamiliar with the indication or patient group.","Side effect management and monitoring responsibilities may create caution.","Existing referral habits may persist after a medicine becomes available in primary care.","Local prescribing schemes can shape behaviour.","Collective professional sentiment can influence adoption."],"partnerText":"NHS organisations and industry can support non-promotional education, peer learning, clinical confidence-building and implementation resources. This should be framed around improving appropriate care, not increasing prescribing volume.","pub":true,"module":"Module 2: Diagnosing implementation constraints","cs":null}]},{"label":"Clinical /\nprescribing","nodes":[{"type":"clinical","title":"Specialist clinical eligibility","sub":"Patient meets criteria for treatment","dur":"1–3 months","what":["The specialist clinician assesses whether an individual patient meets the clinical eligibility criteria for treatment. These criteria may come from NICE guidance, local formulary decisions, service protocols or the medicine’s marketing authorisation.","Eligibility may depend on prior treatment failure, disease severity, biomarkers, diagnostic tests, functional scores, comorbidities or disease staging. If those data are not routinely collected, eligible patients may not be identified."],"considerations":["Local criteria may become more restrictive than NICE if not carefully governed.","Required diagnostic tests may not be routinely commissioned or available.","Eligibility criteria may be interpreted differently between clinicians or providers.","NICE criteria may rely on measures not routinely captured in clinical practice.","Case finding may require proactive searches rather than waiting for routine referrals."],"pub":true,"module":"Module 2: Diagnosing implementation constraints","cs":{"locked":true,"title":"CGRP monoclonal antibodies — eligibility gatekeeping","tag":"Clinical / prescribing — confidence"}},{"type":"clinical","title":"Prior approval or exceptionality","sub":"If required by local formulary","dur":"1–3 months","what":["Some local formularies require clinicians to submit a prior approval request before a medicine can be prescribed. This may apply even where the medicine is NICE-approved, depending on local governance, prescribing status or pathway design.","Prior approval can be useful where it supports safe and appropriate use. However, if it is poorly designed, it can create administrative burden, delay and variation. The key question is whether the approval process adds necessary assurance or simply duplicates decisions already made elsewhere."],"considerations":["Prior approval is more commonly used for medicines without NICE approval, but may still be applied locally.","Administrative burden can discourage referral or prescribing.","Approval turnaround times may delay treatment.","Criteria may be interpreted inconsistently.","Digital processes may not integrate well with clinical workflow."],"pub":true,"module":"Module 6: From diagnosis to action","cs":null},{"type":"informal","partner":true,"title":"Clinician awareness and confidence","sub":"Does the prescriber know and trust the medicine?","dur":"6–18 months","what":["Even where formal approvals, funding, formulary status and pathway arrangements are in place, prescribing depends on clinician confidence. Clinicians need to know the medicine exists, understand the evidence, recognise eligible patients, feel comfortable with monitoring and see the medicine as part of normal clinical practice.","This is often the final implementation gap. It is also one of the hardest to diagnose because it may look like a formal access problem when the real issue is clinical habit, uncertainty, inertia or lack of trust."],"considerations":["Clinicians may not know that NICE guidance has been published.","Existing treatment habits may persist.","Concerns about side effects, monitoring or emerging safety signals can reduce confidence.","A small number of early adopters may account for most initial prescribing.","Peer norms and local clinical leadership strongly influence adoption."],"partnerText":"NHS organisations and industry can support non-promotional education, peer learning, clinical pathway resources and implementation support. The emphasis should be on appropriate evidence-based care, not increasing use of a specific medicine.","pub":true,"module":"Module 2: Diagnosing implementation constraints","cs":{"free":true,"title":"Inclisiran (Leqvio)","body":"Inclisiran also shows how clinician confidence affects uptake. It was a new kind of treatment for primary care, a twice-yearly injectable for cholesterol, unfamiliar in routine GP appointments. The RCGP and BMA publicly urged caution, and the schedule did not fit existing chronic disease review structures. Even where the medicine was funded and green-listed, many clinicians were hesitant to start it, and uptake stayed low.","tag":"Clinical / prescribing — confidence","link":"https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal"}}]},{"label":"Patient /\naccess","nodes":[{"type":"informal","title":"Patient awareness and referral","sub":"Does the patient know to ask?","dur":"Variable","what":["Patients may not know that a new treatment exists, may not understand whether they could be eligible, or may not know how to access the right clinical pathway. This is especially important where the condition is underdiagnosed, where referral depends on patient self-advocacy, or where deprived and underserved populations face additional barriers.","Patient awareness is not just about information. It is about whether the system makes access visible, understandable and navigable for the people most likely to benefit."],"considerations":["Patient information does not automatically accompany NICE approval.","Primary care teams may not know when to refer.","Patients from deprived populations may be less likely to self-advocate.","Language, literacy and digital access barriers can widen inequity.","Referral routes may be unclear or inconsistently applied."],"pub":true,"module":"Module 2: Diagnosing implementation constraints","cs":{"free":true,"title":"Inclisiran (Leqvio)","body":"Inclisiran was intended as a population health intervention, offered proactively to large numbers of eligible patients rather than requested by them. Most patients had no awareness it existed and no reason to ask for it. That placed the burden of identifying and inviting patients on already stretched primary care, and where that case finding did not happen, eligible patients simply did not come forward. By late 2024, fewer than 20,000 people had been prescribed it against a target of 300,000.","tag":"Patient / access — awareness","link":"https://pharmaceutical-journal.com/article/news/inclisiran-prescribed-to-7-of-expected-target-population-in-three-years-nhs-data-reveal"}},{"type":"clinical","title":"Consent, monitoring and adherence","sub":"Ongoing access is not automatic","dur":"Ongoing","what":["Once treatment starts, ongoing access depends on consent, tolerability, adherence, monitoring, follow-up and continuation criteria. For many medicines, this is a complex ongoing process rather than a single prescribing decision.","Implementation therefore needs to consider the whole treatment journey. If patients struggle with travel, monitoring, side effects, administration, communication or follow-up, real-world benefit may be lower than expected and discontinuation may be higher."],"considerations":["Monitoring requirements may not be resourced in the prescribing setting.","Adherence may be lower than in trial conditions.","Some medicines require dispensing, administration or monitoring in a specific setting.","Travel burden can affect persistence and equity.","Continuation and stopping criteria need to be clear and consistently applied."],"pub":true,"module":"Module 4: Designing pathways and services","cs":{"locked":true,"title":"Kaftrio (elexacaftor/tezacaftor/ivacaftor)","tag":"NICE approval — commercial negotiation"}}]}];
+
+function clockSvg(col) {
+  return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="'+col+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
+}
+function bookSvg() {
+  return '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#DCE7E3" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>';
+}
+function lockSvg() {
+  return '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#8A7B66" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+}
+function lockSvgGreen() {
+  return '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2F6B5F" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>';
+}
+
+function buildGrid() {
+  var grid = document.getElementById('grid');
+  grid.style.gridTemplateColumns = '124px ' + lanes.map(function(){ return '1fr'; }).join(' ');
+
+  // spacer for label column
+  var spacer = document.createElement('div');
+  spacer.style.cssText = 'padding:6px 0;';
+  grid.appendChild(spacer);
+
+  // clickable column headers
+  lanes.forEach(function(l) {
+    var h = document.createElement('div');
+    h.className = 'col-header';
+    h.id = 'hdr-' + l.key;
+    h.style.cssText = 'background:'+l.hBg+';color:'+l.hText+';';
+    h.innerHTML = l.label + '<span class="hide-hint">click to hide</span>';
+    h.onclick = function() {
+      activeLanes[l.key] = !activeLanes[l.key];
+      h.classList.toggle('off', !activeLanes[l.key]);
+      h.querySelector('.hide-hint').textContent = activeLanes[l.key] ? 'click to hide' : 'click to show';
+      document.querySelectorAll('.lane-cell[data-lane="'+l.key+'"]').forEach(function(c){
+        c.classList.toggle('hidden', !activeLanes[l.key]);
+      });
+    };
+    grid.appendChild(h);
+  });
+
+  stages.forEach(function(stage) {
+    var labelCell = document.createElement('div');
+    labelCell.className = 'stage-label-cell';
+    var pill = document.createElement('div');
+    pill.className = 'stage-pill';
+    pill.innerHTML = stage.label.split('\n').join('<br>');
+    labelCell.appendChild(pill);
+    grid.appendChild(labelCell);
+
+    lanes.forEach(function(lane) {
+      var cell = document.createElement('div');
+      cell.className = 'lane-cell';
+      cell.dataset.lane = lane.key;
+
+      var matching = stage.nodes.filter(function(n){ return n.type === lane.key; });
+      var excluded = lane.key === 'formal' ? stage.nodes.filter(function(n){ return n.type === 'excluded'; }) : [];
+
+      matching.forEach(function(node) {
+        var n = document.createElement('div');
+        n.className = 'node';
+        n.style.background = lane.bg;
+        n.style.borderColor = lane.border;
+        n.style.borderLeft = '3px solid ' + lane.sc;
+        var durBadge = node.dur ? '<span class="node-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></span>' : '';
+        var csArr = node.cs ? (Array.isArray(node.cs) ? node.cs : [node.cs]) : [];
+        var csBadge = '';
+        if (csArr.length > 0) {
+          var anyFree = csArr.some(function(cs){ return cs.free; });
+          var anyLocked = csArr.some(function(cs){ return cs.locked; });
+          if (anyFree && !anyLocked) {
+            csBadge = '<span class="node-cs-badge">'+bookSvg()+' Case study</span>';
+          } else if (anyLocked && !anyFree) {
+            csBadge = '<span class="node-lock-badge">'+lockSvg()+' '+(csArr.length > 1 ? csArr.length+' case studies' : 'Case study')+'</span>';
+          } else {
+            csBadge = '<span class="node-cs-badge">'+bookSvg()+' Case study</span><span class="node-lock-badge">'+lockSvg()+' +'+csArr.filter(function(c){return c.locked;}).length+'</span>';
+          }
+        }
+        var partnerBadge = node.partner ? '<span class="node-partner-badge">&#129309; Partnership</span>' : '';
+        n.innerHTML =
+          '<div class="node-title" style="color:'+lane.tc+'">'+node.title+'</div>'+
+          '<div class="node-sub">'+node.sub+'</div>'+
+          '<div class="node-badges">'+durBadge+csBadge+partnerBadge+'</div>';
+        n.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
+        cell.appendChild(n);
+      });
+
+      excluded.forEach(function(node) {
+        var n = document.createElement('div');
+        n.className = 'node-excl';
+        n.innerHTML = '<div class="node-title">'+node.title+'</div><div class="node-sub">'+node.sub+'</div><div><span class="excl-badge">'+node.badge+'</span></div>';
+        if (node.clickable) {
+          n.style.cursor = 'pointer';
+          n.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
+        }
+        cell.appendChild(n);
+      });
+
+      grid.appendChild(cell);
+    });
+  });
+}
+
+function openPanel(node, stageLabel, lane) {
+  var c = document.getElementById('panel-content');
+  var typeLabel = node.type === 'excluded' ? 'Specialised commissioning' : typeLabels[node.type];
+  var typeBg = node.type === 'excluded' ? '#EFEBE2' : lane.togBg;
+  var typeColor = node.type === 'excluded' ? '#8A8175' : lane.togText;
+  var accent = node.type === 'excluded' ? '#8A8175' : lane.sc;
+
+  var durHtml = node.dur ? '<div class="panel-dur">'+clockSvg(accent)+'<span>'+node.dur+'</span></div>' : '';
+
+  // What this is - array of paragraphs
+  var whatArr = Array.isArray(node.what) ? node.what : [node.what];
+  var whatHtml = whatArr.map(function(p){ return '<p>'+p+'</p>'; }).join('');
+
+  // Key implementation considerations
+  var consHtml = (node.considerations || []).map(function(b){ return '<li>'+b+'</li>'; }).join('');
+
+  // Partnership potential - free, general, only on flagged nodes
+  var partnerHtml = '';
+  if (node.partner && node.partnerText) {
+    partnerHtml = '<div class="partner-card"><div class="partner-label">&#129309; Partnership potential</div><div class="partner-title">A legitimate way to work together</div><div class="partner-body">'+node.partnerText+'</div></div>';
+  }
+
+  // Strategic insight - locked, on any node with pub:true. Collaboration wording only on partner nodes.
+  var pubHtml = '';
+  if (node.pub) {
+    var siTitle = node.partner ? 'A real NHS and industry collaboration' : 'Go deeper on this stage';
+    var siText = node.partner ? PUB_TEXT_PARTNER : PUB_TEXT_GENERAL;
+    pubHtml = '<div class="case-card locked" style="margin-top:16px"><div class="case-label">'+lockSvg()+' Strategic insight</div><div class="case-title">'+siTitle+'</div><div class="case-locked-text">'+siText+'</div><a class="lock-cta" onclick="goCourse()">Register your interest &rarr;</a></div>';
+  }
+
+  // Case studies - free (inclisiran) or locked
+  var csHtml = '';
+  if (node.cs) {
+    var csArr = Array.isArray(node.cs) ? node.cs : [node.cs];
+    csArr.forEach(function(cs) {
+      if (cs.locked) {
+        csHtml += '<hr class="panel-divider"><div class="case-card locked"><div class="case-label">'+lockSvg()+' Case study</div><div class="case-title">'+cs.title+'</div><div class="case-locked-text">A full worked example for this stage is part of the course. It covers what happened, the data on expected versus actual uptake, and what it means for implementation.</div><a class="lock-cta" onclick="goCourse()">Register your interest &rarr;</a></div>';
+      } else {
+        var freeFlag = cs.free ? '<div class="free-flag">Free worked example</div>' : '';
+        csHtml += '<hr class="panel-divider"><div class="case-card"><div class="case-label">'+bookSvg()+' Case study</div><div class="case-title">'+cs.title+'</div><div class="case-body">'+cs.body+'</div><div><span class="case-tag">'+cs.tag+'</span><a class="case-link" href="'+cs.link+'" target="_blank" rel="noopener">Read more &rarr;</a></div>'+freeFlag+'</div>';
+      }
+    });
+  }
+
+  var flagHtml = node.partner ? '<div class="panel-partner-flag">&#129309; Partnership opportunity</div>' : '';
+
+  c.innerHTML =
+    '<div class="panel-type" style="background:'+typeBg+';color:'+typeColor+'">'+typeLabel+'</div>'+
+    durHtml+
+    '<h2>'+node.title+'</h2>'+
+    '<div class="panel-stage">'+stageLabel+'</div>'+
+    flagHtml+
+    '<h3>What this is</h3>'+whatHtml+
+    '<h3>Key implementation considerations</h3><ul>'+consHtml+'</ul>'+
+    partnerHtml+pubHtml+csHtml;
+  document.getElementById('panel').classList.add('open');
+  document.getElementById('overlay').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('panel').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+function buildStack() {
+  var stack = document.getElementById('stack');
+  stack.innerHTML = '';
+  stages.forEach(function(stage) {
+    var sec = document.createElement('div');
+    sec.className = 'stack-stage';
+    var label = document.createElement('div');
+    label.className = 'stack-stage-label';
+    label.textContent = stage.label.replace('\n',' ');
+    sec.appendChild(label);
+
+    stage.nodes.forEach(function(node) {
+      if (node.type === 'excluded') {
+        var ex = document.createElement('div');
+        ex.className = 'stack-card-excl';
+        ex.innerHTML = '<div class="stack-card-title">'+node.title+'</div><div class="stack-card-sub">'+node.sub+'</div><span class="excl-badge">'+node.badge+'</span>';
+        if (node.clickable) {
+          ex.style.cursor = 'pointer';
+          ex.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lanes[0]); };
+        }
+        sec.appendChild(ex);
+        return;
+      }
+      var lane = lanes.filter(function(l){ return l.key === node.type; })[0];
+      if (!activeLanes[lane.key]) return;
+      var card = document.createElement('div');
+      card.className = 'stack-card';
+      card.dataset.lane = lane.key;
+      card.style.background = lane.bg;
+      card.style.borderColor = lane.border;
+      card.style.borderLeftColor = lane.sc;
+      var typeTag = '<span class="stack-card-type" style="background:'+lane.togBg+';color:'+lane.togText+'">'+lane.label+'</span>';
+      var durBadge = node.dur ? '<span class="node-dur">'+clockSvg(lane.sc)+'<span style="color:'+lane.tc+'">'+node.dur+'</span></span>' : '';
+      var csArr = node.cs ? (Array.isArray(node.cs) ? node.cs : [node.cs]) : [];
+      var csBadge = '';
+      if (csArr.length > 0) {
+        var anyFree = csArr.some(function(cs){ return cs.free; });
+        var anyLocked = csArr.some(function(cs){ return cs.locked; });
+        if (anyFree && !anyLocked) csBadge = '<span class="node-cs-badge">'+bookSvg()+' Case study</span>';
+        else if (anyLocked && !anyFree) csBadge = '<span class="node-lock-badge">'+lockSvg()+' '+(csArr.length>1?csArr.length+' case studies':'Case study')+'</span>';
+        else csBadge = '<span class="node-cs-badge">'+bookSvg()+' Case study</span>';
+      }
+      var partnerBadge = node.partner ? '<span class="node-partner-badge">&#129309; Partnership</span>' : '';
+      card.innerHTML =
+        typeTag +
+        '<div class="stack-card-title" style="color:'+lane.tc+'">'+node.title+'</div>'+
+        '<div class="stack-card-sub">'+node.sub+'</div>'+
+        '<div class="node-badges">'+durBadge+csBadge+partnerBadge+'</div>';
+      card.onclick = function(){ openPanel(node, stage.label.replace('\n',' '), lane); };
+      sec.appendChild(card);
+    });
+    stack.appendChild(sec);
+  });
+}
+
+function buildBarrierFilter() {
+  var cont = document.getElementById('barrier-filter');
+  cont.innerHTML = '';
+  lanes.forEach(function(l) {
+    var b = document.createElement('button');
+    b.className = 'barrier-chip' + (activeLanes[l.key] ? '' : ' off');
+    b.textContent = l.label;
+    b.style.cssText = 'background:'+l.togBg+';color:'+l.togText+';border-color:'+l.sc+';';
+    b.onclick = function() {
+      activeLanes[l.key] = !activeLanes[l.key];
+      b.classList.toggle('off', !activeLanes[l.key]);
+      buildStack();
+    };
+    cont.appendChild(b);
+  });
+}
+
+function isMobile() { return window.innerWidth <= 640; }
+
+var lastMode = null;
+function render() {
+  var mobile = isMobile();
+  if (mobile) {
+    buildStack();
+  } else {
+    // rebuild grid only when switching into desktop to reset any lane states cleanly
+    if (lastMode !== 'desktop') {
+      document.getElementById('grid').innerHTML = '';
+      buildGrid();
+    }
+  }
+  lastMode = mobile ? 'mobile' : 'desktop';
+}
+
+// Interim: buttons open an email to capture course interest. Replace with COURSE_URL when the course page is live.
+var COURSE_EMAIL = 'hello@theprescription.co.uk';
+var COURSE_SUBJECT = 'Approval to Access course';
+var COURSE_BODY = 'Hi Ewan, I found the Approval to Access tool and I am interested in the course. Please let me know when it is available.';
+var PUB_TEXT_PARTNER = 'The course goes further on this stage, including a published, verifiable NHS and industry collaboration that shows what legitimate partnership working looks like in practice, with the source so you can read it in full.';
+var PUB_TEXT_GENERAL = 'The course goes beyond what this stage is and into why it behaves the way it does: how to tell this constraint apart from the others, what evidence reveals it, and what effective implementation looks like here.';
+function goCourse() {
+  window.location.href = 'mailto:' + COURSE_EMAIL + '?subject=' + encodeURIComponent(COURSE_SUBJECT) + '&body=' + encodeURIComponent(COURSE_BODY);
+}
+
+buildBarrierFilter();
+buildGrid();
+render();
+window.addEventListener('resize', function() {
+  var nowMobile = isMobile();
+  if ((nowMobile && lastMode !== 'mobile') || (!nowMobile && lastMode !== 'desktop')) {
+    render();
+  }
+});
+
+</script>
+</body>
+</html>
