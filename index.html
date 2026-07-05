@@ -216,7 +216,7 @@ body { font-family: var(--sans); background: var(--bg); color: var(--ink); min-h
       <li>Published NHS and industry collaborations behind each partnership opportunity, with sources</li>
       <li>A structured way to explore the partnership potential for a medicine of your own</li>
     </ul>
-    <a class="course-cta-btn" onclick="goCourse()">Register your interest &rarr;</a>
+    <a class="course-cta-btn" onclick="goCourse()">Explore the course &rarr;</a>
   </div>
 
   <div class="footer">
@@ -375,7 +375,7 @@ function openPanel(node, stageLabel, lane) {
   if (node.pub) {
     var siTitle = node.partner ? 'A real NHS and industry collaboration' : 'Go deeper on this stage';
     var siText = node.partner ? PUB_TEXT_PARTNER : PUB_TEXT_GENERAL;
-    pubHtml = '<div class="case-card locked" style="margin-top:16px"><div class="case-label">'+lockSvg()+' Strategic insight</div><div class="case-title">'+siTitle+'</div><div class="case-locked-text">'+siText+'</div><a class="lock-cta" onclick="goCourse()">Register your interest &rarr;</a></div>';
+    pubHtml = '<div class="case-card locked" style="margin-top:16px"><div class="case-label">'+lockSvg()+' Strategic insight</div><div class="case-title">'+siTitle+'</div><div class="case-locked-text">'+siText+'</div><a class="lock-cta" onclick="goCourse()">Unlock in the course &rarr;</a></div>';
   }
 
   // Case studies - free (inclisiran) or locked
@@ -384,7 +384,7 @@ function openPanel(node, stageLabel, lane) {
     var csArr = Array.isArray(node.cs) ? node.cs : [node.cs];
     csArr.forEach(function(cs) {
       if (cs.locked) {
-        csHtml += '<hr class="panel-divider"><div class="case-card locked"><div class="case-label">'+lockSvg()+' Case study</div><div class="case-title">'+cs.title+'</div><div class="case-locked-text">A full worked example for this stage is part of the course. It covers what happened, the data on expected versus actual uptake, and what it means for implementation.</div><a class="lock-cta" onclick="goCourse()">Register your interest &rarr;</a></div>';
+        csHtml += '<hr class="panel-divider"><div class="case-card locked"><div class="case-label">'+lockSvg()+' Case study</div><div class="case-title">'+cs.title+'</div><div class="case-locked-text">A full worked example for this stage is part of the course. It covers what happened, the data on expected versus actual uptake, and what it means for implementation.</div><a class="lock-cta" onclick="goCourse()">Unlock in the course &rarr;</a></div>';
       } else {
         var freeFlag = cs.free ? '<div class="free-flag">Free worked example</div>' : '';
         csHtml += '<hr class="panel-divider"><div class="case-card"><div class="case-label">'+bookSvg()+' Case study</div><div class="case-title">'+cs.title+'</div><div class="case-body">'+cs.body+'</div><div><span class="case-tag">'+cs.tag+'</span><a class="case-link" href="'+cs.link+'" target="_blank" rel="noopener">Read more &rarr;</a></div>'+freeFlag+'</div>';
@@ -501,14 +501,12 @@ function render() {
   lastMode = mobile ? 'mobile' : 'desktop';
 }
 
-// Interim: buttons open an email to capture course interest. Replace with COURSE_URL when the course page is live.
-var COURSE_EMAIL = 'hello@theprescription.co.uk';
-var COURSE_SUBJECT = 'Approval to Access course';
-var COURSE_BODY = 'Hi Ewan, I found the Approval to Access tool and I am interested in the course. Please let me know when it is available.';
+// Course link. Buttons open the Podia course page.
+var COURSE_URL = 'https://theprescription.podia.com/approval-to-access';
 var PUB_TEXT_PARTNER = 'The course goes further on this stage, including a published, verifiable NHS and industry collaboration that shows what legitimate partnership working looks like in practice, with the source so you can read it in full.';
 var PUB_TEXT_GENERAL = 'The course goes beyond what this stage is and into why it behaves the way it does: how to tell this constraint apart from the others, what evidence reveals it, and what effective implementation looks like here.';
 function goCourse() {
-  window.location.href = 'mailto:' + COURSE_EMAIL + '?subject=' + encodeURIComponent(COURSE_SUBJECT) + '&body=' + encodeURIComponent(COURSE_BODY);
+  window.open(COURSE_URL, '_blank', 'noopener');
 }
 
 buildBarrierFilter();
